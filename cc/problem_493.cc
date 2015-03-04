@@ -14,22 +14,12 @@ class Solver {
  public:
    Solver() : urn_(kNumColors, kNumPerColor) {}
    
-   int Encode() {
-     Urn sorted = urn_;
-     std::sort(sorted.begin(), sorted.end());
-     int encoded = 0;
-     int factor = 1;
-     for (auto val : sorted) {
-       encoded += val * factor;
-       factor *= kNumPerColor;
-     }
-     return encoded;
-   }
- 
    int CountColors() {
      int count = 0;
      for (auto val : urn_) {
-       if (val != kNumPerColor) ++count;
+       if (val != kNumPerColor) {
+          ++count;
+        }
      }
      return count;
    }
@@ -39,7 +29,8 @@ class Solver {
        return Counts{1, CountColors()};
      }
 
-     int encoded = Encode();
+     Urn encoded = urn_;
+     std::sort(encoded.begin(), encoded.end());
      auto it = memoized_.find(encoded);
      if (it != memoized_.end()) {
        return it->second;
@@ -66,7 +57,7 @@ class Solver {
  private:
    int balls_picked_ = 0;
    Urn urn_;
-   std::map<int, Counts> memoized_;
+   std::map<Urn, Counts> memoized_;
 };
 
 int main(int argc, char* argv[]) {
