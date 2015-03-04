@@ -5,9 +5,11 @@ import (
 	"sort"
 )
 
-const NumColors = 7
-const NumPerColor = 10
-const NumToPick = 20
+const (
+	NumColors = 7
+  NumPerColor = 10
+  NumToPick = 20
+)
 
 type Counts struct {
 	colors, picks float64
