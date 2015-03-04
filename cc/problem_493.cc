@@ -56,7 +56,6 @@ Counts PickOneBall(std::int16_t balls_picked, State* state) {
     Counts counts;
     counts.total_distinct_picks = 1;
     counts.total_distinct_colors = CountColors(state->urn);
-    state->memoized.emplace(encoded, counts);
     return counts;
   }
   
@@ -68,12 +67,14 @@ Counts PickOneBall(std::int16_t balls_picked, State* state) {
   Counts counts = {};
   std::int16_t next_balls_picked = balls_picked + 1;
   for (int i = 0; i < kNumColors; ++i) {
-    if (state->urn[i] > 0) {
-      --state->urn[i];
-      Counts returned = PickOneBall(next_balls_picked, state);
-      counts.total_distinct_colors += returned.total_distinct_colors;
-      counts.total_distinct_picks += returned.total_distinct_picks;
-      ++state->urn[i];
+    for (int j = 0; j < kNumPerColor; ++j) {
+      if (state->urn[i] > j) {
+        --state->urn[i];
+        Counts returned = PickOneBall(next_balls_picked, state);
+        counts.total_distinct_colors += returned.total_distinct_colors;
+        counts.total_distinct_picks += returned.total_distinct_picks;
+        ++state->urn[i];
+      }
     }
   }
   
