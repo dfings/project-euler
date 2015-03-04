@@ -6,8 +6,8 @@
 #include <stdint.h>
 
 struct Counts {
-  std::int64_t total_distinct_colors = 0;
-  std::int64_t total_distinct_picks = 0;
+  double total_distinct_colors = 0;
+  double total_distinct_picks = 0;
 };
 
 constexpr std::int8_t kNumColors = 7;
@@ -85,8 +85,8 @@ Counts PickOneBall(std::int16_t balls_picked, State* state) {
 int main(int argc, char* argv[]) {
   State state;
   Counts counts = PickOneBall(0, &state);
-  printf("Total colors = %lld\n", counts.total_distinct_colors);
-  printf("Total picks = %lld\n", counts.total_distinct_picks);
+  printf("Total colors = %f\n", counts.total_distinct_colors);
+  printf("Total picks = %f\n", counts.total_distinct_picks);
   printf("Average = %0.9f\n", static_cast<double>(counts.total_distinct_colors) / counts.total_distinct_picks);
   return 0;
 }
