@@ -1,92 +1,79 @@
 #include <algorithm>
-#include <array>
-#include <bitset>
 #include <map>
 #include <stdio.h>
-#include <stdint.h>
+#include <vector>
 
-struct Counts {
-  double total_distinct_colors = 0;
-  double total_distinct_picks = 0;
+constexpr int kNumColors = 7;
+constexpr int kNumPerColor = 10;
+constexpr int kNumToPick = 20;
+
+using Counts = std::pair<double, double>;
+using Urn = std::vector<int>;
+
+class Solver {
+ public:
+   Solver() : urn_(kNumColors, kNumPerColor) {}
+   
+   int Encode() {
+     Urn sorted = urn_;
+     std::sort(sorted.begin(), sorted.end());
+     int encoded = 0;
+     int factor = 1;
+     for (auto val : sorted) {
+       encoded += val * factor;
+       factor *= kNumPerColor;
+     }
+     return encoded;
+   }
+ 
+   int CountColors() {
+     int count = 0;
+     for (auto val : urn_) {
+       if (val != kNumPerColor) ++count;
+     }
+     return count;
+   }
+  
+   Counts PickNextBall() {
+     if (balls_picked_ == kNumToPick) {
+       return Counts{1, CountColors()};
+     }
+
+     int encoded = Encode();
+     auto it = memoized_.find(encoded);
+     if (it != memoized_.end()) {
+       return it->second;
+     } 
+
+     Counts counts{0, 0};
+     ++balls_picked_;
+     for (int i = 0; i < kNumColors; ++i) {
+       for (int j = 0; j < kNumPerColor; ++j) {
+         if (urn_[i] > j) {
+           --urn_[i];
+           Counts returned = PickNextBall();
+           counts.first += returned.first;
+           counts.second += returned.second;
+           ++urn_[i];
+         }
+       }
+     }
+     --balls_picked_;
+     memoized_.emplace(encoded, counts);
+     return counts;
+   }
+    
+ private:
+   int balls_picked_ = 0;
+   Urn urn_;
+   std::map<int, Counts> memoized_;
 };
-
-constexpr std::int8_t kNumColors = 7;
-using ColorsArray = std::array<std::int8_t, kNumColors>;
-constexpr ColorsArray kEmptyColorsArray = {0, 0, 0, 0, 0, 0, 0};
-constexpr std::int8_t kNumPerColor = 10;
-constexpr std::int16_t kNumToPick = 20;
-
-struct State {
-  State() {
-    for (int i = 0; i < kNumColors; ++i) {
-      urn[i] = kNumPerColor;
-    }
-  }
-  
-  ColorsArray urn = kEmptyColorsArray;
-  std::map<int, Counts> memoized;
-};
-
-int Encode(const ColorsArray& colors) {
-  ColorsArray sorted = colors;
-  std::sort(sorted.begin(), sorted.end());
-  int encoded = 0;
-  int factor = 1;
-  for (int i = 0; i < kNumColors; ++i) {
-    encoded += sorted[i] * factor;
-    factor *= kNumPerColor;
-  }
-  return encoded;
-}
-
-int CountColors(const ColorsArray& colors) {
-  int count = 0;
-  for (int i = 0; i < kNumColors; ++i) {
-    if (colors[i] != kNumPerColor) {
-      ++count;
-    }
-  }
-  return count;
-}
-
-Counts PickOneBall(std::int16_t balls_picked, State* state) {
-  int encoded = Encode(state->urn);
-  
-  if (balls_picked == kNumToPick) {
-    Counts counts;
-    counts.total_distinct_picks = 1;
-    counts.total_distinct_colors = CountColors(state->urn);
-    return counts;
-  }
-  
-  auto it = state->memoized.find(encoded);
-  if (it != state->memoized.end()) {
-    return it->second;
-  } 
-  
-  Counts counts = {};
-  std::int16_t next_balls_picked = balls_picked + 1;
-  for (int i = 0; i < kNumColors; ++i) {
-    for (int j = 0; j < kNumPerColor; ++j) {
-      if (state->urn[i] > j) {
-        --state->urn[i];
-        Counts returned = PickOneBall(next_balls_picked, state);
-        counts.total_distinct_colors += returned.total_distinct_colors;
-        counts.total_distinct_picks += returned.total_distinct_picks;
-        ++state->urn[i];
-      }
-    }
-  }
-  
-  state->memoized.emplace(encoded, counts);
-  return counts;
-}
 
 int main(int argc, char* argv[]) {
-  State state;
-  Counts counts = PickOneBall(0, &state);
-  printf("Total colors = %f\n", counts.total_distinct_colors);
-  printf("Total picks = %f\n", counts.total_distinct_picks);
-  printf("Average = %0.9f\n", static_cast<double>(counts.total_distinct_colors) / counts.total_distinct_picks);
+  Solver solver;
+  Counts counts = solver.PickNextBall();
+  printf("Total colors = %0.0f\n", counts.second);
+  printf("Total picks = %0.0f\n", counts.first);
+  printf("Average = %0.9f\n", counts.second / counts.first);
   return 0;
 }
