@@ -13,7 +13,6 @@ class Solver(object):
     
   def EncodeUrn():
     copy = sorted(urn)
-    
 
   def CountColors(self):
     # Must use floating points to get correct precision.
