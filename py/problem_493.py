@@ -11,9 +11,6 @@ class Solver(object):
     self.urn = [NUM_PER_COLOR] * NUM_COLORS
     self.memoized = {}
     
-  def EncodeUrn():
-    copy = sorted(urn)
-
   def CountColors(self):
     # Must use floating points to get correct precision.
     count = 0.0  
