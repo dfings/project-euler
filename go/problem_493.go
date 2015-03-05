@@ -7,8 +7,8 @@ import (
 
 const (
 	NumColors = 7
-  NumPerColor = 10
-  NumToPick = 20
+	NumPerColor = 10
+	NumToPick = 20
 )
 
 type Counts struct {
@@ -74,6 +74,6 @@ func main() {
 	solver.init()
 	counts := solver.pickNextBall()
 	fmt.Printf("Total colors = %0.0f\n", counts.colors);
-  fmt.Printf("Total picks = %0.0f\n", counts.picks);
-  fmt.Printf("Average = %0.9f\n", counts.colors / counts.picks);
+	fmt.Printf("Total picks = %0.0f\n", counts.picks);
+	fmt.Printf("Average = %0.9f\n", counts.colors / counts.picks);
 }
