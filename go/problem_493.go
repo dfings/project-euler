@@ -17,15 +17,17 @@ type Counts struct {
 
 type Solver struct {
 	ballsPicked int
-	urn [NumColors]int;
+	urn [NumColors]int
 	memoized map[[NumColors]int]Counts
 }
 
-func (self *Solver) init() {
-	self.memoized = make(map[[NumColors]int]Counts)
+func NewSolver() *Solver {
+	var solver Solver
+	solver.memoized = make(map[[NumColors]int]Counts)
 	for i := 0; i < NumColors; i++ {
-		self.urn[i] = NumPerColor
+		solver.urn[i] = NumPerColor
 	}
+	return &solver
 }
 
 func (self *Solver) countColors() int {
@@ -43,8 +45,7 @@ func (self *Solver) pickNextBall() Counts {
 		return Counts{float64(self.countColors()), 1}
 	}
 	
-	var encoded [NumColors]int;
-	encoded = self.urn
+	var encoded [NumColors]int = self.urn
 	sort.Ints(encoded[:])
 	counts, ok := self.memoized[encoded]
 	if (ok) {
@@ -70,10 +71,9 @@ func (self *Solver) pickNextBall() Counts {
 }
 
 func main() {
-	var solver Solver
-	solver.init()
+	solver := NewSolver()
 	counts := solver.pickNextBall()
-	fmt.Printf("Total colors = %0.0f\n", counts.colors);
-	fmt.Printf("Total picks = %0.0f\n", counts.picks);
-	fmt.Printf("Average = %0.9f\n", counts.colors / counts.picks);
+	fmt.Printf("Total colors = %0.0f\n", counts.colors)
+	fmt.Printf("Total picks = %0.0f\n", counts.picks)
+	fmt.Printf("Average = %0.9f\n", counts.colors / counts.picks)
 }
