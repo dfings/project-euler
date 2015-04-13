@@ -3,7 +3,9 @@
 let numColors = 7
 let numPerColor = 10
 let numToPick = 20
-let sumWhenDone = numColors * numPerColor - numToPick
+
+(* Determines if we've picked all the balls we need to from an urn. *)
+let allBallsPicked = List.sum >> (=) (numColors * numPerColor - numToPick)
 
 (* Counts the number of distinct colors that have been picked from the urn. *)
 let countColorsPicked = List.filter ((<>) numPerColor) >> List.length
@@ -29,7 +31,7 @@ let sumBigIntTuples = List.fold sumTuple (bigIntTuple (0, 0))
 (* Computes (totalColorsPicked, totalLeaves) for leaves rooted at this subtree. *)
 let rec computeCounts = Memoize.memoizeWithCacheKey List.sort (fun urn ->
   (* If this is a leaf, then we can just count the colors directly. *)
-  if List.sum urn = sumWhenDone then bigIntTuple ((countColorsPicked urn), 1)
+  if allBallsPicked urn then bigIntTuple ((countColorsPicked urn), 1)
   (* Otherwise we need to sum up the values of all leaves rooted at this subtree. *)  
   else getChildren urn |> List.map computeCounts |> sumBigIntTuples  
 )
