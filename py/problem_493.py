@@ -3,52 +3,42 @@
 NUM_COLORS = 7
 NUM_PER_COLOR = 10
 NUM_TO_PICK = 20
+SUM_ALL_PICKED = NUM_COLORS * NUM_PER_COLOR - NUM_TO_PICK
 
 class Solver(object):
   
   def __init__(self):
-    self.balls_picked = 0
     self.urn = [NUM_PER_COLOR] * NUM_COLORS
-    self.memoized = {}
+    self.cache = {}
+
+  def AllBallsPicked(self):
+    return sum(self.urn) == SUM_ALL_PICKED
     
   def CountColors(self):
-    count = 0
-    for val in self.urn:
-      if val != NUM_PER_COLOR:
-        count += 1
-    return count
+    return len([val for val in self.urn if val < NUM_PER_COLOR])
 
-  def PickNextBall(self):
-    if self.balls_picked == NUM_TO_PICK:
-      return [1, self.CountColors()]
-    
-    encoded = tuple(sorted(self.urn))
-    counts = self.memoized.get(encoded, None)
-    if counts:
-      return counts
-    
-    counts = [0, 0]
-    self.balls_picked += 1
-    for i in xrange(NUM_COLORS):
-      for j in xrange(NUM_PER_COLOR):
-        if self.urn[i] > j:
-          self.urn[i] -= 1
-          returned = self.PickNextBall()
-          counts[0] += returned[0]
-          counts[1] += returned[1]
-          self.urn[i] += 1
-    self.balls_picked -= 1
-    self.memoized[encoded] = counts
+  def ComputeCounts(self):
+    key = tuple(sorted(self.urn))
+    counts = self.cache.get(key)
+    if not counts:  
+      if self.AllBallsPicked():
+        counts = [self.CountColors(), 1]
+      else:
+        counts = [0, 0]
+        for i in xrange(NUM_COLORS):
+          for j in xrange(self.urn[i]):
+            self.urn[i] -= 1
+            child_counts = self.ComputeCounts()
+            counts[0] += child_counts[0]
+            counts[1] += child_counts[1]
+            self.urn[i] += 1
+      self.cache[key] = counts
     return counts
     
   
-def main():
-  solver = Solver()
-  counts = solver.PickNextBall()
-  print "Total colors = %d" % counts[1]
-  print "Total picks = %d" % counts[0]
-  print "Average = %0.9f" % (float(counts[1]) / counts[0])
-  
-
 if __name__ == '__main__':
-  main()
+  solver = Solver()
+  counts = solver.ComputeCounts()
+  print "Total colors = %d" % counts[0]
+  print "Total picks = %d" % counts[1]
+  print "Average = %0.9f" % (float(counts[0]) / counts[1])
