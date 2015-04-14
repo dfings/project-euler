@@ -27,11 +27,10 @@ defmodule Problem493 do
   # Generates one new urn state for each possible ball that could be picked.
   def child_gen(head, ball_count, tail) do
     next_states = get_next_states(head, ball_count, tail)
-    case tail == [] do 
-      true -> next_states 
-      false ->    
-        [nextball_count | nextTail] = tail
-        next_states ++ child_gen(head ++ [ball_count], nextball_count, nextTail)
+    case tail do
+      [] -> next_states 
+      [nextball_count | next_tail] -> 
+        next_states ++ child_gen(head ++ [ball_count], nextball_count, next_tail)
     end
   end
  
