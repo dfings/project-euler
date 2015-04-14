@@ -11,7 +11,7 @@
 (defn count-colors-picked [urn]
   (biginteger (count (filter #(<  % NUM_PER_COLOR) urn))))
 
-;; Gets the next urn state giving that we're considering picking a ball at the given position
+;; Gets the next urn states giving that we're considering picking a ball at the given position
 ;; that has the given number currentlyl left in the urn.
 (defn get-next-states [head ball-count tail]
   (if (= ball-count 0) []
