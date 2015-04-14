@@ -13,7 +13,7 @@
 
 ;; Gets the next urn state giving that we're considering picking a ball at the given position
 ;; that has the given number currentlyl left in the urn.
-(defn get-next-state [head ball-count tail]
+(defn get-next-states [head ball-count tail]
   (if (= ball-count 0) []
     (if (empty? tail) 
       (repeat ball-count (concat head [(- ball-count 1)]))
@@ -21,10 +21,10 @@
 
 ;; Generates one new urn state for each possible ball that could be picked.
 (defn child-gen [head ball-count tail]
-  (let [next-state (get-next-state head ball-count tail)]
+  (let [next-states (get-next-states head ball-count tail)]
     (if (empty? tail)
-      next-state
-      (concat next-state (child-gen (concat head [ball-count]) (first tail) (rest tail))))))
+      next-states
+      (concat next-states (child-gen (concat head [ball-count]) (first tail) (rest tail))))))
 
 ;; Helper for using childGenerator on an urn. We sort the input so that compute-counts
 ;; can memoize properly.

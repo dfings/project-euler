@@ -14,15 +14,19 @@ defmodule Problem493 do
     Enum.filter(urn, fn (count) -> count < @num_per_color end) |> Enum.count
   end
 
+  # Gets the next urn states giving that we're considering picking a ball at 
+  # the given position that has the given number currentlyl left in the urn.
+  def get_next_states(head, ball_count, tail) do
+    cond do
+      ball_count == 0 -> []
+      tail == [] -> List.duplicate(head ++ [ball_count - 1], ball_count)
+      true -> List.duplicate(head ++ [ball_count - 1] ++ tail, ball_count)
+    end
+  end
+
   # Generates one new urn state for each possible ball that could be picked.
   def child_gen(head, ball_count, tail) do
-    cond do
-      ball_count == 0 -> next_states = []
-      tail == [] ->
-        next_states = List.duplicate(head ++ [ball_count - 1], ball_count)
-      true -> 
-        next_states = List.duplicate(head ++ [ball_count - 1] ++ tail, ball_count)
-    end
+    next_states = get_next_states(head, ball_count, tail)
     case tail == [] do 
       true -> next_states 
       false ->    
