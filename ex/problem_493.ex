@@ -10,8 +10,9 @@ defmodule Problem493 do
   def all_balls_picked(urn) do Enum.sum(urn) == sum_all_picked() end
 
   # Counts the number of distinct colors that have been picked from the urn.
+  def has_been_picked(count) do count < @num_per_color end
   def count_colors_picked(urn) do
-    Enum.filter(urn, fn (count) -> count < @num_per_color end) |> Enum.count
+    Enum.filter(urn, &has_been_picked/1) |> Enum.count
   end
 
   # Gets the next urn states giving that we're considering picking a ball at 
