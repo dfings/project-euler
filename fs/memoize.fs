@@ -1,7 +1,6 @@
 module Memoize
 
 #nowarn "40"
-
 let memoizeWithCacheKey cacheKeyFunc func =
   let cache = new System.Collections.Generic.Dictionary<_, _>()
   fun x ->
