@@ -1,3 +1,8 @@
+(*
+  $ fsharpc memoize.fs problem_493.fs
+  $ mono problem_493.exe
+*)
+
 #nowarn "40"
 
 let numColors = 7
