@@ -20,8 +20,8 @@ defmodule Problem493 do
   def get_next_states head, ball_count, tail do
     cond do
       ball_count == 0 -> []
-      tail == [] -> List.duplicate (head ++ [ball_count - 1]), ball_count
-      true -> List.duplicate (head ++ [ball_count - 1] ++ tail), ball_count
+      tail == [] -> List.duplicate head ++ [ball_count - 1], ball_count
+      true -> List.duplicate head ++ [ball_count - 1] ++ tail, ball_count
     end
   end
 
@@ -31,7 +31,7 @@ defmodule Problem493 do
     case tail do
       [] -> next_states 
       [nextball_count | next_tail] -> 
-        next_states ++ child_gen (head ++ [ball_count]), nextball_count, next_tail
+        next_states ++ child_gen head ++ [ball_count], nextball_count, next_tail
     end
   end
  
@@ -41,9 +41,9 @@ defmodule Problem493 do
   end
 
   # Tuple support.
-  def sum_tuples {a1, a2}, {b1, b2} do {(a1 + b1), (a2 + b2)} end
+  def sum_tuples {a1, a2}, {b1, b2} do {a1 + b1, a2 + b2} end
 
-  # Computes (totalColorsPicked, totalLeaves) for leaves rooted at this subtree.
+  # Computes {totalColorsPicked, totalLeaves} for leaves rooted at this subtree.
   def compute_counts urn do
     key = Enum.sort urn      
     res = Process.get key
@@ -53,10 +53,10 @@ defmodule Problem493 do
         res = {(count_colors_picked urn), 1} 
       else
         # Otherwise we need to sum up the values of all leaves rooted at this subtree.
-        child_counts = Enum.map (generate_children urn), (&compute_counts/1)
+        child_counts = Enum.map (generate_children urn), &compute_counts/1
         res = List.foldl child_counts, {0, 0}, &sum_tuples/2
       end
-      Process.put(key, res)
+      Process.put key, res
     end
     res    
   end
@@ -64,8 +64,8 @@ defmodule Problem493 do
   def main do
     starting_urn = List.duplicate @num_per_color, @num_colors
     {total_colors_picked, total_leaves} = compute_counts starting_urn
-    IO.puts (:io_lib.format "Total colors = ~w", [total_colors_picked])
-    IO.puts (:io_lib.format "Total leaves = ~w", [total_leaves])
-    IO.puts (:io_lib.format "Average = ~w", [total_colors_picked / total_leaves])
+    IO.puts :io_lib.format "Total colors = ~w", [total_colors_picked]
+    IO.puts :io_lib.format "Total leaves = ~w", [total_leaves]
+    IO.puts :io_lib.format "Average = ~w", [total_colors_picked / total_leaves]
   end
 end
