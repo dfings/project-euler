@@ -24,7 +24,7 @@ class Solver {
      return count;
    }
   
-   Counts PickNextBall() {
+   Counts ComputeCounts() {
      if (balls_picked_ == kNumToPick) {
        return Counts{1, CountColors()};
      }
@@ -42,7 +42,7 @@ class Solver {
        for (int j = 0; j < kNumPerColor; ++j) {
          if (urn_[i] > j) {
            --urn_[i];
-           Counts returned = PickNextBall();
+           Counts returned = ComputeCounts();
            counts.first += returned.first;
            counts.second += returned.second;
            ++urn_[i];
@@ -62,7 +62,7 @@ class Solver {
 
 int main(int argc, char* argv[]) {
   Solver solver;
-  Counts counts = solver.PickNextBall();
+  Counts counts = solver.ComputeCounts();
   printf("Total colors = %0.0f\n", counts.second);
   printf("Total picks = %0.0f\n", counts.first);
   printf("Average = %0.9f\n", counts.second / counts.first);

@@ -5,40 +5,39 @@ NUM_PER_COLOR = 10
 NUM_TO_PICK = 20
 SUM_ALL_PICKED = NUM_COLORS * NUM_PER_COLOR - NUM_TO_PICK
 
-class Solver(object):
-  
-  def __init__(self):
-    self.urn = [NUM_PER_COLOR] * NUM_COLORS
-    self.cache = {}
+cache = {}
 
-  def AllBallsPicked(self):
-    return sum(self.urn) == SUM_ALL_PICKED
+
+def all_balls_picked(urn):
+  return sum(urn) == SUM_ALL_PICKED
     
-  def CountColors(self):
-    return len([val for val in self.urn if val < NUM_PER_COLOR])
 
-  def ComputeCounts(self):
-    key = tuple(sorted(self.urn))
-    counts = self.cache.get(key)
-    if not counts:  
-      if self.AllBallsPicked():
-        counts = [self.CountColors(), 1]
-      else:
-        counts = [0, 0]
-        for i in xrange(NUM_COLORS):
-          for j in xrange(self.urn[i]):
-            self.urn[i] -= 1
-            child_counts = self.ComputeCounts()
-            counts[0] += child_counts[0]
-            counts[1] += child_counts[1]
-            self.urn[i] += 1
-      self.cache[key] = counts
-    return counts
+def count_colors(urn):
+  return len([val for val in urn if val < NUM_PER_COLOR])
+
+
+def compute_counts(urn):
+  key = tuple(sorted(urn))
+  counts = cache.get(key)
+  if not counts:  
+    if all_balls_picked(urn):
+      counts = [count_colors(urn), 1]
+    else:
+      counts = [0, 0]
+      for i in xrange(len(urn)):
+        for _ in xrange(urn[i]):
+          urn[i] -= 1
+          child_counts = compute_counts(urn)
+          counts[0] += child_counts[0]
+          counts[1] += child_counts[1]
+          urn[i] += 1
+    cache[key] = counts
+  return counts
     
   
 if __name__ == '__main__':
-  solver = Solver()
-  counts = solver.ComputeCounts()
+  starting_urn = [NUM_PER_COLOR] * NUM_COLORS
+  counts = compute_counts(starting_urn)
   print "Total colors = %d" % counts[0]
   print "Total picks = %d" % counts[1]
   print "Average = %0.9f" % (float(counts[0]) / counts[1])
