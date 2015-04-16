@@ -5,4 +5,4 @@ let rec gen_fib a b =
 let fib_seq = gen_fib 1 1
 let is_even i = i % 2 = 0 
 
-printfn "%d" (List.filter is_even fib_seq |> List.sum)
+printfn "%d" (fib_seq |> List.filter is_even |> List.sum)

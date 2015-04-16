@@ -7,5 +7,5 @@ defmodule Problem2 do
     else [b | gen_fib b, a + b] end
   end
 
-  def main do IO.puts Enum.sum Enum.filter (gen_fib 1, 1), &is_even/1 end
+  def main do IO.puts ((gen_fib 1, 1) |>  (Enum.filter &is_even/1) |> Enum.sum) end
 end
