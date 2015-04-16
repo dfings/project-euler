@@ -12,7 +12,7 @@ defmodule Problem493 do
   # Counts the number of distinct colors that have been picked from the urn.
   def has_been_picked count do count < @num_per_color end
   def count_colors_picked urn do
-    (Enum.filter urn, (&has_been_picked/1)) |> Enum.count
+    (Enum.filter urn, &has_been_picked/1) |> Enum.count
   end
 
   # Gets the next urn states giving that we're considering picking a ball at 
@@ -54,7 +54,7 @@ defmodule Problem493 do
       else
         # Otherwise we need to sum up the values of all leaves rooted at this subtree.
         child_counts = Enum.map (generate_children urn), (&compute_counts/1)
-        res = List.foldl child_counts, {0, 0}, &(sum_tuples/2)
+        res = List.foldl child_counts, {0, 0}, &sum_tuples/2
       end
       Process.put(key, res)
     end
