@@ -1,16 +1,10 @@
 import qualified Data.List as List
 
+multiplyByAll3DigitNumbers x = map ((*) x) [100..999]
+
 productsOfTwo3DigitNumbers =
-  reverse $ List.sort $ allProductsForStart start start
-  where start = 999
-        allProductsForStart x y = 
-          if x == 0 then []
-          else if y < 100 then allProductsForStart (x - 1) (x - 1)
-          else (x * y) : allProductsForStart x (y - 1)
+  reverse $ List.sort $ concat $ map multiplyByAll3DigitNumbers [100..999]
 
-findFirstPalindrome candidates =
-  if show num == reverse (show num) then num
-  else findFirstPalindrome (tail candidates)
-  where num = head candidates
+isPalindrome x = show x == reverse (show x)
 
-main = print $ findFirstPalindrome $ productsOfTwo3DigitNumbers
+main = print $ head $ filter isPalindrome productsOfTwo3DigitNumbers
