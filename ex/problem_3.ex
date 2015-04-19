@@ -4,7 +4,7 @@ defmodule Problem3 do
   def factor_with(n, i) do
     cond do
       n == 1 -> []
-      (rem n, i) == 0 -> [n | factor_with(div(n, i), i)]
+      rem(n, i) == 0 -> [n | factor_with(div(n, i), i)]
       true -> factor_with(n, (i + 1))
     end
   end
