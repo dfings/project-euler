@@ -4,7 +4,7 @@
   (loop [n n i i]
     (cond (= n 1) []
           (= (mod n i) 0) (cons i (factor-with (/ n i) i))  ;; Can't recur here.
-          :else (recur n (+ i 1)))))
+          :else (recur n (inc i)))))
 
 (defn factor [n]
   (reverse (factor-with n 2)))
@@ -13,7 +13,7 @@
 (defn get-tail-args [n i factors]
   (if (= (mod n i) 0)
     (list (/ n i) i (cons i factors))
-    (list n (+ i 1) factors)))
+    (list n (inc i) factors)))
 
 (defn factor-tail-recursive [n]
   (loop [n' n i 2 factors []]
@@ -27,14 +27,14 @@
   (loop [n' n factor-count 0]
     (if (> (mod n' i) 0)
       (list n' (replicate factor-count i))
-      (recur (/ n' i) (+ factor-count 1)))))
+      (recur (/ n' i) (inc factor-count)))))
 
 (defn factor-tail-recursive-2 [n]
   (loop [n' n i 2 factors []]
     (if (= n' 1)
       factors
       (let [[n'' new-factors] (factor-by n' i)]
-        (recur n'' (+ i 1) (concat new-factors factors))))))
+        (recur n'' (inc i) (concat new-factors factors))))))
 
 (defn main []
   (printf "%d\n" (first (factor 600851475143)))
