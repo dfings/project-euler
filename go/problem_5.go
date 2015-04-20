@@ -2,22 +2,29 @@ package main
 
 import "fmt"
 
-func divisibleThrough20(n int) bool {
-  for i := 2; i <= 20; i++ {
-    if n % i != 0 {
-      return false
+func lcm(x int, y int) int {
+  lcm := 1
+  factor := 2
+  for x != 1 || y != 1 {
+    if x % factor == 0 || y % factor == 0 {
+      lcm *= factor
+      if x % factor == 0 {
+        x /= factor
+      } 
+      if y % factor == 0 {
+        y /= factor
+      }
+    } else {
+      factor += 1
     }
-  } 
-  return true
+  }
+  return lcm
 }
 
 func main() {
-  n := 2520
-  for {
-    if divisibleThrough20(n) {
-      break
-    }
-    n += 1
+  n := 1
+  for i := 2; i <= 20 ; i++ {
+    n = lcm(n, i)
   }
   fmt.Printf("%d\n", n)
 }
