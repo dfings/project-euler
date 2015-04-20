@@ -3,7 +3,7 @@
 (defn factor-with [n i]
   (loop [n n i i]
     (cond (= n 1) []
-          (= (mod n i) 0) (cons i (factor-with (/ n i) i))  ;; Can't recur here.
+          (zero? (mod n i)) (cons i (factor-with (/ n i) i))  ;; Can't recur here.
           :else (recur n (inc i)))))
 
 (defn factor [n]
@@ -11,7 +11,7 @@
 
 ;; Solution using full tail recursion.
 (defn get-tail-args [n i factors]
-  (if (= (mod n i) 0)
+  (if (zero? (mod n i))
     (list (/ n i) i (cons i factors))
     (list n (inc i) factors)))
 

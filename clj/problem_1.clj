@@ -1,5 +1,5 @@
 (defn sieve [i]
-  (or (= 0 (mod i 3)) (= 0 (mod i 5))))
+  (or (zero? (mod i 3)) (zero? (mod i 5))))
 
 (defn main []
   (printf "%d\n" (reduce + (filter sieve (range 1 1000)))))
