@@ -9,7 +9,7 @@
 
 ;; Counts the number of distinct colors that have been picked from the urn.
 (defn count-colors-picked [urn]
-  (biginteger (count (filter #(<  % NUM_PER_COLOR) urn))))
+  (bigint (count (filter #(<  % NUM_PER_COLOR) urn))))
 
 ;; Gets the next urn states giving that we're considering picking a ball at the given position
 ;; that has the given number currentlyl left in the urn.
@@ -40,7 +40,7 @@
   (memoize (fn [urn]
     (if (all-balls-picked urn)
       ;; If this is a leaf, then we can just count the colors directly.
-      (list (count-colors-picked urn) (biginteger 1)),
+      (list (count-colors-picked urn) (bigint 1)),
       ;; Otherwise we need to sum up the values of all leaves rooted at this subtree.
       (sum-tuples (map compute-counts (generate-children urn)))))))
 
