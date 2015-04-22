@@ -2,23 +2,15 @@ package main
 
 import "fmt"
 
-func lcm(x int, y int) int {
-  lcm := 1
-  factor := 2
-  for x != 1 || y != 1 {
-    if x % factor == 0 || y % factor == 0 {
-      lcm *= factor
-      if x % factor == 0 {
-        x /= factor
-      } 
-      if y % factor == 0 {
-        y /= factor
-      }
-    } else {
-      factor += 1
-    }
+func gcd(x int, y int) int {
+  for y != 0 {
+    x, y = y, x % y
   }
-  return lcm
+  return x
+}
+
+func lcm(x int, y int) int {
+  return (x * y) / gcd(x, y)
 }
 
 func main() {
