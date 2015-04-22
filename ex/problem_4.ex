@@ -2,8 +2,8 @@
 
 defmodule Problem4 do
   def multiply_by_all_3_digit_numbers(n), do: Enum.map(100..999, &(&1 * n))
-  def products_of_all_3_digi_numbers() do
-    100..999 |> Enum.flat_map(&(multiply_by_all_3_digit_numbers/1)) |> Enum.sort |> Enum.reverse
+  def products_of_all_3_digit_numbers() do
+    Enum.flat_map(100..999, &(multiply_by_all_3_digit_numbers/1))
   end
 
   def is_palindrome(n) do
@@ -11,5 +11,7 @@ defmodule Problem4 do
     s == String.reverse(s)
   end
 
-  def main, do: IO.puts (products_of_all_3_digi_numbers() |> Enum.filter(&(is_palindrome/1)) |> hd)
+  def main do 
+    IO.puts (products_of_all_3_digit_numbers() |> Enum.filter(&(is_palindrome/1)) |> Enum.max)
+  end
 end
