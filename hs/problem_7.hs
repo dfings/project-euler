@@ -1,9 +1,8 @@
 isNotDivisibleBy _ [] = True
-isNotDivisibleBy i ps =
-  if mod i firstPrime == 0 then False
-  else if firstPrime * firstPrime > i then True
-  else isNotDivisibleBy i (tail ps)
-  where firstPrime = head ps
+isNotDivisibleBy i (p:ps) =
+  if mod i p == 0 then False
+  else if p * p > i then True
+  else isNotDivisibleBy i ps
 
 getNextPrime ps = getNextPrimeFrom (1 + last ps) ps
   where getNextPrimeFrom i ps = if isNotDivisibleBy i ps 
