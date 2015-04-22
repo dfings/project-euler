@@ -1,16 +1,18 @@
 isNotDivisibleBy _ [] = True
-isNotDivisibleBy i primes =
+isNotDivisibleBy i ps =
   if mod i firstPrime == 0 then False
   else if firstPrime * firstPrime > i then True
-  else isNotDivisibleBy i (tail primes)
-  where firstPrime = head primes
+  else isNotDivisibleBy i (tail ps)
+  where firstPrime = head ps
 
-appendIfPrime i primes =
-  if isNotDivisibleBy i primes then primes ++ [i]
-  else primes
+getNextPrime ps = getNextPrimeFrom (1 + last ps) ps
+  where getNextPrimeFrom i ps = if isNotDivisibleBy i ps 
+        then i 
+        else getNextPrimeFrom (i + 1) ps
 
-getNthPrime n =
-  loop 2 []
-  where loop i primes = if length primes == n then i - 1 else loop (i + 1) (appendIfPrime i primes)
+getNthPrime 1 = 2
+getNthPrime n = getNextPrime (take (n - 1) primes)
+
+primes = map getNthPrime [1..]
 
 main = print $ getNthPrime 10001
