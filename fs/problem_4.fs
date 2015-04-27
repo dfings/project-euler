@@ -1,5 +1,4 @@
-let multiplyByAll3DigitNumbers x = List.map ((*) x) [100..999]
-let productsOfTwo3DigitNumbers = [100..999] |> List.map multiplyByAll3DigitNumbers |> List.concat
+let productsOfTwo3DigitNumbers = [for x in 100..999 do for y in 100..999 -> x * y]
 
 let reverseString (s:string) = new string(Array.rev (s.ToCharArray()))
 let isPalindrome x = 

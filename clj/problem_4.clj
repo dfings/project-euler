@@ -1,8 +1,7 @@
-(defn multiply-by-all-3-digit-numbers [x]
-  (map (partial * x) (range 100 999)))
-
 (def products-of-3-digit-numbers
-  (flatten (map multiply-by-all-3-digit-numbers (range 100 999))))
+  (for [x (range 100 1000)
+        y (range 100 1000)]
+   (* x y)))
 
 (defn is-palindrome [x]
   (= (str x) (clojure.string/reverse (str x))))

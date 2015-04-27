@@ -1,9 +1,8 @@
 # $ elixir -r problem_4.ex -e 'Problem4.main'
 
 defmodule Problem4 do
-  def multiply_by_all_3_digit_numbers(n), do: Enum.map(100..999, &(&1 * n))
   def products_of_all_3_digit_numbers() do
-    Enum.flat_map(100..999, &(multiply_by_all_3_digit_numbers/1))
+    for x <- 100..999, y <- 100..999, do: x * y
   end
 
   def is_palindrome(n) do
