@@ -26,7 +26,7 @@ allStringsOfLength n str =
   if length str < n then []
   else take n str : allStringsOfLength n (drop 1 str)
 
-stringToDigits str = map Char.digitToInt str
+stringToDigits = map Char.digitToInt
 maxProductOfDigits strs = maximum (map (product . stringToDigits) strs)
 
 main = do print $ maxProductOfDigits (allStringsOfLength 13 longString)
