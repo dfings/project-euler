@@ -6,7 +6,7 @@ import (
 )
 
 func isPalindrome(s string) bool {
-	i, j := 0, len(s) - 1
+	i, j := 0, len(s)-1
 	for {
 		if s[i] != s[j] {
 			return false
