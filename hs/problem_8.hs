@@ -22,11 +22,11 @@ longString =
   \05886116467109405077541002256983155200055935729725\
   \71636269561882670428252483600823257530420752963450"
 
-getAllStringsOfLength n str =
+allStringsOfLength n str =
   if length str < n then []
-  else take n str : getAllStringsOfLength n (drop 1 str)
+  else take n str : allStringsOfLength n (drop 1 str)
 
-getProductOfDigits str = product (map Char.digitToInt str)
-getMaxProductOfDigits strs = maximum (map getProductOfDigits strs)
+stringToDigits str = map Char.digitToInt str
+maxProductOfDigits strs = maximum (map (product . stringToDigits) strs)
 
-main = do print $ getMaxProductOfDigits (getAllStringsOfLength 13 longString)
+main = do print $ maxProductOfDigits (allStringsOfLength 13 longString)
