@@ -7,5 +7,5 @@
         :when (= (+ (* a a) (* b b)) (* c c))]
    (vector a b c))))
 
-(defn -main [args]
+(defn -main [& args]
   (printf "%s -> %s\n" triple (reduce * triple)))
