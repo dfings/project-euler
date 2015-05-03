@@ -8,7 +8,7 @@ import (
 )
 
 func main() {
-	file, _ := os.Open("../data/problem_10_data")
+	file, _ := os.Open("../data/problem_13_data")
 	defer file.Close()
 
 	scanner := 	bufio.NewScanner(file)
