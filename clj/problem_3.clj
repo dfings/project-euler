@@ -1,12 +1,5 @@
-;; Solution using a lazy sequence.
-(defn factor-with [n i]
-  (loop [n n i i]
-    (cond (= n 1) []
-          (zero? (mod n i)) (lazy-seq (cons i (factor-with (/ n i) i)))
-          :else (recur n (inc i)))))
-
-(defn factor [n]
-  (reverse (factor-with n 2)))
+(ns problem-3
+  [:require factor])  ;; Main solution moved here.
 
 ;; Solution using full tail recursion.
 (defn get-tail-args [n i factors]
@@ -35,9 +28,7 @@
       (let [[n'' new-factors] (factor-by n' i)]
         (recur n'' (inc i) (concat new-factors factors))))))
 
-(defn main []
-  (println (first (factor 600851475143)))
+(defn -main [& args]
+  (println (first (factor/factor 600851475143)))
   (println (first (factor-tail-recursive 600851475143)))
   (println (first (factor-tail-recursive-2 600851475143))))
-
-(main)
