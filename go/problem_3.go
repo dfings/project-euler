@@ -3,14 +3,11 @@ package main
 import "fmt"
 
 func main() {
-	factor, max := 2, 0
-	num := 600851475143
-	for num > 1 {
-		if num%factor == 0 {
-			num = num / factor
-			max = factor
-		} else {
-			factor = factor + 1
+	factors := Factor(600851475143)
+	max := 0
+	for i := 0; i < len(factors); i++ {
+		if factors[i] > max {
+			max = factors[i]
 		}
 	}
 	fmt.Printf("%d\n", max)

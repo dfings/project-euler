@@ -1,7 +1,5 @@
 package main
 
-import "fmt"
-
 func isDivisibleBy(i int, primes []int) bool {
 	for _, prime := range primes {
 		if i%prime == 0 {
@@ -14,7 +12,7 @@ func isDivisibleBy(i int, primes []int) bool {
 	return false
 }
 
-func getNthPrime(n int) int {
+func GeneratePrimes(n int) []int {
 	var primes []int
 	i := 2
 	for {
@@ -22,12 +20,8 @@ func getNthPrime(n int) int {
 			primes = append(primes, i)
 		}
 		if len(primes) == n {
-			return primes[n-1]
+			return primes
 		}
 		i += 1
 	}
-}
-
-func main() {
-	fmt.Printf("%d\n", getNthPrime(10001))
 }
