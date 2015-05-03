@@ -1,9 +1,8 @@
-;; Non-tail recursive version, but works betwen the stack doesn't
-;; get very deep.
+;; Solution using a lazy sequence.
 (defn factor-with [n i]
   (loop [n n i i]
     (cond (= n 1) []
-          (zero? (mod n i)) (cons i (factor-with (/ n i) i))  ;; Can't recur here.
+          (zero? (mod n i)) (lazy-seq (cons i (factor-with (/ n i) i)))
           :else (recur n (inc i)))))
 
 (defn factor [n]
