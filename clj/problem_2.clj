@@ -4,6 +4,6 @@
     (cons b (gen-fib b (+ a b)))))
 
 (defn main []
-  (printf "%d\n" (reduce + (filter even? (gen-fib 1 1)))))
+  (println (reduce + (filter even? (gen-fib 1 1)))))
 
 (main)

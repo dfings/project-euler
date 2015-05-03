@@ -23,6 +23,6 @@
 (defn main []
   ;; Must warm up to avoid stack overflow!
   (doall (map nth-prime (range 1 10000)))
-  (printf "%s\n" (nth-prime 10001)))
+  (println (nth-prime 10001)))
 
 (main)

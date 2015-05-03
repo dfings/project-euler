@@ -7,6 +7,6 @@
   (= (str x) (clojure.string/reverse (str x))))
 
 (defn main []
-  (printf "%d\n" (reduce max (filter is-palindrome products-of-3-digit-numbers))))
+  (println (reduce max (filter is-palindrome products-of-3-digit-numbers))))
 
 (main)

@@ -34,6 +34,6 @@
 (defn compute-product [s] (reduce * (string-to-digits s)))
 
 (defn main []
-  (printf "%s\n" (reduce max (map compute-product (get-all-substrings-of-length long-number 13)))))
+  (println (reduce max (map compute-product (get-all-substrings-of-length long-number 13)))))
 
 (main)

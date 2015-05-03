@@ -9,4 +9,4 @@
 
 (defn -main [& args]
   (let [lines (read-lines (second args))]
-    (printf "%s\n" (first-chars 10 (reduce + (map read-string lines))))))
+    (println (first-chars 10 (reduce + (map read-string lines))))))

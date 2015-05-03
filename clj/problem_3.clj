@@ -37,8 +37,8 @@
         (recur n'' (inc i) (concat new-factors factors))))))
 
 (defn main []
-  (printf "%d\n" (first (factor 600851475143)))
-  (printf "%d\n" (first (factor-tail-recursive 600851475143)))
-  (printf "%d\n" (first (factor-tail-recursive-2 600851475143))))
+  (println (first (factor 600851475143)))
+  (println (first (factor-tail-recursive 600851475143)))
+  (println (first (factor-tail-recursive-2 600851475143))))
 
 (main)

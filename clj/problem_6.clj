@@ -8,6 +8,6 @@
   (square (reduce + (range 1 (inc x)))))
 
 (defn main []
-  (printf "%s\n" (- (square-of-sum 100) (sum-of-squares 100))))
+  (println (- (square-of-sum 100) (sum-of-squares 100))))
 
 (main)

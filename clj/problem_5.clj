@@ -7,6 +7,6 @@
   (/ (* x y) (gcd x y)))
 
 (defn main []
-  (printf "%s\n" (reduce lcm (range 1 20))))
+  (println (reduce lcm (range 1 20))))
 
 (main)

@@ -23,6 +23,6 @@
         (primes (next-prime next-candidate new-prior) new-prior))))))
 
 (defn main []
-  (printf "%s\n" (nth (primes) 10000)))
+  (println (nth (primes) 10000)))
 
 (main)

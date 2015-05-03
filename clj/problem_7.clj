@@ -25,6 +25,6 @@
 (def primes (map nth-prime nums))
 
 (defn main []
-  (printf "%s\n" (nth-prime 10001)))
+  (println (nth-prime 10001)))
 
 (main)
