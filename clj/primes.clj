@@ -1,25 +1,25 @@
 (ns primes)
 
-(defn square [x]
-  (* x x))
+(defn add-to-sieve [sieve non-prime factors]
+  (if (empty? factors)
+    sieve
+    (let [factor (first factors)
+          composite (+ non-prime factor)
+          existing-factors (get sieve composite [])
+          sieve-add (assoc sieve composite (cons factor existing-factors))
+          sieve-remove (dissoc sieve-add non-prime)]
+      (recur sieve-remove non-prime (rest factors)))))
 
-(defn divisible-by? [i ps]
-  (cond (empty? ps) false
-        (= (mod i (first ps)) 0) true
-        (> (square (first ps)) i) false
-        :else (recur i (rest ps))))
-
-(defn next-prime [i ps]
-  (if (not (divisible-by? i ps))
-    i
-    (recur (inc i) ps)))
+(defn next-prime [i sieve]
+  (let [factors (get sieve i)]
+    (if (= factors nil)
+      (list i (assoc sieve (* i i) [i]))
+      (recur (inc i) (add-to-sieve sieve i factors)))))
 
 (defn primes 
   ([] 
-    (primes 2 []))
-  ([current-prime all-prior]
-    (let [new-prior (conj all-prior current-prime)
-          next-candidate (+ current-prime 1)]
+    (apply primes (next-prime 2 {})))
+  ([current-prime sieve]
       (lazy-seq (cons
         current-prime 
-        (primes (next-prime next-candidate new-prior) new-prior))))))
+        (apply primes (next-prime (+ current-prime 1) sieve))))))
