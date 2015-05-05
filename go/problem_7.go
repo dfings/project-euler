@@ -3,6 +3,9 @@ package main
 import "fmt"
 
 func main() {
-	n := 10001
-	fmt.Printf("%d\n", GeneratePrimes(n)[n-1])
+	gen := NewPrimeGenerator()
+	for i := 0; i < 1000000; i++ {
+		gen.Next()
+	}
+	fmt.Printf("%d\n", gen.Next())
 }
