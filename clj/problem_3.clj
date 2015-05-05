@@ -29,6 +29,6 @@
         (recur n'' (inc i) (concat new-factors factors))))))
 
 (defn -main [& args]
-  (println (first (factor/factor 600851475143)))
+  (println (first (factor/prime-factor 600851475143)))
   (println (first (factor-tail-recursive 600851475143)))
   (println (first (factor-tail-recursive-2 600851475143))))
