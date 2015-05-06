@@ -1,4 +1,6 @@
-(require '[clojure.string])
+(ns problem-8
+  [:require (clojure.string)]
+  [:require strings])
 
 (def long-number (clojure.string/join ""
   ["73167176531330624919225119674426574742355349194934"
@@ -29,11 +31,5 @@
       (subs s 0 n) 
       (get-all-substrings-of-length (subs s 1) n)))))
 
-(defn char-to-digit [c] (Character/digit c 10))
-(defn string-to-digits [s] (map char-to-digit s))
-(defn compute-product [s] (reduce * (string-to-digits s)))
-
-(defn main []
-  (println (reduce max (map compute-product (get-all-substrings-of-length long-number 13)))))
-
-(main)
+(defn -main [& args]
+  (println (reduce max (map strings/compute-product (get-all-substrings-of-length long-number 13)))))
