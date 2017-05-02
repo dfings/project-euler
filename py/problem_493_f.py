@@ -1,5 +1,7 @@
 #!/usr/bin/env python 
 
+from __future__ import print_function
+
 NUM_COLORS = 7
 NUM_PER_COLOR = 10
 NUM_TO_PICK = 20
@@ -49,8 +51,8 @@ def compute_counts(urn):
     if all_balls_picked(urn):
       res = [count_colors_picked(urn), 1]
     else:
-      child_counts = map(compute_counts, generate_children(urn))
-      res = map(sum, zip(*child_counts))
+      child_counts = list(map(compute_counts, generate_children(urn)))
+      res = list(map(sum, zip(*child_counts)))
     cache[key] = res
   return res
 
@@ -58,9 +60,9 @@ def compute_counts(urn):
 def main():
   starting_urn = [NUM_PER_COLOR] * NUM_COLORS
   counts = compute_counts(starting_urn)
-  print "Total colors = %d" % counts[0]
-  print "Total picks = %d" % counts[1]
-  print "Average = %0.9f" % (float(counts[0]) / counts[1])
+  print("Total colors = {}".format(counts[0]))
+  print("Total picks = {}".format(counts[1]))
+  print("Average = {0:0.9f}".format(float(counts[0]) / counts[1]))
   
 
 if __name__ == '__main__':

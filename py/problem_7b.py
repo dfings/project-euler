@@ -1,5 +1,7 @@
 #!/usr/bin/env python 
 
+from __future__ import print_function
+
 def primes():
   i = 2
   sieve = {}
@@ -23,7 +25,7 @@ def get_index(iterator, i):
 
 
 def main():
-  print get_index(primes(), 10000)
+  print(get_index(primes(), 10000))
   
 
 if __name__ == '__main__':
