@@ -51,7 +51,7 @@ def compute_counts(urn):
     if all_balls_picked(urn):
       res = [count_colors_picked(urn), 1]
     else:
-      child_counts = list(map(compute_counts, generate_children(urn)))
+      child_counts = map(compute_counts, generate_children(urn))
       res = list(map(sum, zip(*child_counts)))
     cache[key] = res
   return res
