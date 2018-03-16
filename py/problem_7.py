@@ -1,24 +1,6 @@
 #!/usr/bin/env python 
 
-from __future__ import print_function
-
-def primes():
-  i = 2
-  seen = []
-
-  def divisible_by_seen(x):
-    for prime in seen:
-      if x % prime == 0:
-        return True
-      elif prime * prime > x:
-        return False
-    return False
-
-  while True:
-    if not divisible_by_seen(i):
-      seen.append(i)
-      yield i
-    i += 1
+from primes import primes2
 
 
 def get_index(iterator, i):
@@ -28,7 +10,7 @@ def get_index(iterator, i):
 
 
 def main():
-  print(get_index(primes(), 10000))
+  print(get_index(primes2(), 10000))
   
 
 if __name__ == '__main__':

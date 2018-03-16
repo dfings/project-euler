@@ -1,1 +1,7 @@
-{"compilerOptions": {"noImplicitAny": true}}
+{
+  "compilerOptions": {"noImplicitAny": true},
+  "target": "es6",
+  "lib": [
+      "es6",
+  ]
+}

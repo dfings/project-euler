@@ -17,7 +17,7 @@ func PrimeFactor(n int) []int {
 func Factors(n int) []int {
 	var factors []int
 	i := 2
-	for ; i * i < n; i++ {
+	for ; i*i < n; i++ {
 		if n%i == 0 {
 			factors = append(factors, i)
 			factors = append(factors, n/i)
