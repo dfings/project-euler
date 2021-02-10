@@ -1,16 +1,12 @@
 @file:Import("primes.main.kts")
 
-fun PrimeFactors(value: Long): List<Long> {
+fun PrimeFactors(value: Long): Sequence<Long> = sequence {
   var n = value
-  val factors = mutableListOf<Long>()
   for (prime in Primes()) {
     if (n % prime == 0L) {
-      factors.add(n)
+      yield(n)
       while (n % prime == 0L) n /= prime
     }
-    if (n == 1L) {
-      return factors
-    }
+    if (n == 1L) break
   }
-  throw AssertionError()
 }
