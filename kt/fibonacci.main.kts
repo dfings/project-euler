@@ -1,7 +1,7 @@
 fun Fibonacci(): Sequence<Long> = sequence {
-  var terms = Pair(0L, 1L)
+  var state = Pair(0L, 1L) // current, next
   while (true) {
-    yield(terms.first)
-    terms = Pair(terms.second, terms.first + terms.second)
+    yield(state.first)
+    state = Pair(state.second, state.first + state.second)
   }
 }
