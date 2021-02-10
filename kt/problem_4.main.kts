@@ -1,11 +1,10 @@
 #!/usr/bin/env kotlin
 
-fun isPalindrome(value: Int) = value.toString() == value.toString().reversed()
+@file:Import("product.main.kts")
 
-println(sequence {
-  for (x in 100..999) {
-    for (y in 100..999) {
-      yield(x * y)
-    }
-  }
-}.filter(::isPalindrome).maxOrNull())
+fun productsOfThreeDigitNumbers() = 
+  cartesianProduct(100..999, 100..999).map { it.first * it.second }
+
+fun isPalindrome(value: Int) = value.toString().let { it == it.reversed() }
+
+println(productsOfThreeDigitNumbers().filter(::isPalindrome).maxOrNull())
