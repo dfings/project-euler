@@ -1,18 +1,20 @@
 fun Primes(): Sequence<Long> = sequence {
-  var i: Long = 2L
-  var sieve = hashMapOf<Long, MutableList<Long>>()
+  var current: Long = 2L
+  var knownPrimeFactors = hashMapOf<Long, MutableList<Long>>()
 
   while (true) {
-    val result = sieve[i]
-    if (result == null) {
-      yield(i)
-      sieve[i * i] = mutableListOf(i)
+    val primeFactors = knownPrimeFactors[current]
+    if (primeFactors == null) {
+      yield(current)
+      knownPrimeFactors[current * current] = mutableListOf(current)
     } else {
-      sieve.remove(i)
-      for (j in result) {
-        sieve.getOrPut(i + j) { mutableListOf<Long>() }.add(j)
+      knownPrimeFactors.remove(current)  // Reclaim memory
+      for (primeFactor in primeFactors) {
+        knownPrimeFactors.getOrPut(current + primeFactor) { 
+          mutableListOf<Long>() 
+        }.add(primeFactor)
       }
-    }
-    i += 1
+    }    
+    current += 1
   }
 }
