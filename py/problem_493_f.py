@@ -1,7 +1,5 @@
 #!/usr/bin/env python 
 
-from __future__ import print_function
-
 NUM_COLORS = 7
 NUM_PER_COLOR = 10
 NUM_TO_PICK = 20

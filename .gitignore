@@ -1,2 +1,5 @@
-*.exe
 *.pyc
+.DS_Store
+.gradle/
+.venv/
+build/

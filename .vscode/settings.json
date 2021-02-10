@@ -1,0 +1,11 @@
+{
+  "files.associations": {
+    "*.kts": "kotlin",
+  },
+  "python.autoComplete.extraPaths": [
+      "./py"
+  ],
+  "python.analysis.extraPaths": [
+    "./py"
+  ],
+}

@@ -2,7 +2,6 @@
 
 from primes import primes2
 
-
 def get_index(iterator, i):
   for j, elt in enumerate(iterator):
     if i == j:
