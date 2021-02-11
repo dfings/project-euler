@@ -1,18 +1,18 @@
+import com.google.common.collect.ArrayListMultimap
+
 fun Primes(): Sequence<Long> = sequence {
   var current: Long = 2L
-  var knownPrimeFactors = hashMapOf<Long, MutableList<Long>>()
+  var knownPrimeFactors = ArrayListMultimap.create<Long, Long>()
 
   while (true) {
     val primeFactors = knownPrimeFactors[current]
-    if (primeFactors == null) {
+    if (primeFactors.isEmpty()) {
       yield(current)
-      knownPrimeFactors[current * current] = mutableListOf(current)
+      knownPrimeFactors.put(current * current, current)
     } else {
-      knownPrimeFactors.remove(current)  // Reclaim memory
+      knownPrimeFactors.removeAll(current)  // Reclaim memory
       for (primeFactor in primeFactors) {
-        knownPrimeFactors.getOrPut(current + primeFactor) { 
-          mutableListOf<Long>() 
-        }.add(primeFactor)
+        knownPrimeFactors.put(current + primeFactor, primeFactor)
       }
     }    
     current += 1
