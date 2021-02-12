@@ -21,8 +21,8 @@ func isPalindrome(s string) bool {
 
 func main() {
 	max := 0
-	for i := 999; i > 99; i-- {
-		for j := 999; j > 99; j-- {
+	for i := 100; i < 1000; i++ {
+		for j := 100; j < 1000; j++ {
 			current := i * j
 			if isPalindrome(strconv.Itoa(current)) && current > max {
 				max = current
