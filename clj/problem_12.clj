@@ -6,5 +6,4 @@
 (defn not-enough-factors [n]
   (<= (count (factor/factors n)) 500))
 
-(defn -main [& args]
-  (println (first (drop-while (partial not-enough-factors) triangular-numbers))))
+(println (first (drop-while (partial not-enough-factors) triangular-numbers)))

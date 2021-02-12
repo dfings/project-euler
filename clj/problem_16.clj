@@ -3,5 +3,4 @@
 
 (defn pow [x n] (reduce * (repeat n x)))
 
-(defn -main [& args]
-  (println (strings/compute-sum (str (pow (bigint 2) 1000)))))
+(println (strings/compute-sum (str (pow (bigint 2) 1000))))

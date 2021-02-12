@@ -4,5 +4,4 @@
 (defn factorial [n]
   (reduce * (range (bigint 1) (bigint (inc n)))))
 
-(defn -main [& args]
-  (println (strings/compute-sum (str (factorial 100)))))
+(println (strings/compute-sum (str (factorial 100))))

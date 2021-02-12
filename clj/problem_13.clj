@@ -7,6 +7,5 @@
 (defn first-chars [n obj]
   (subs (str obj) 0 n))
 
-(defn -main [& args]
-  (let [lines (read-lines (second args))]
-    (println (first-chars 10 (reduce + (map read-string lines))))))
+(let [lines (read-lines (second args))]
+  (println (first-chars 10 (reduce + (map read-string lines)))))

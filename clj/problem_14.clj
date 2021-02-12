@@ -11,7 +11,4 @@
 (defn print-length [n]
   (printf "%s %s\n" (collatz-length n) n))
 
-(defn main []
-  (print-length (apply max-key collatz-length (range 1 1000001))))
-
-(main)
+(print-length (apply max-key collatz-length (range 1 1000001)))

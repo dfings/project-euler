@@ -1,7 +1,7 @@
+;; clj -M problem_1.clj
+(ns problem-1)
+
 (defn sieve [i]
   (or (zero? (mod i 3)) (zero? (mod i 5))))
 
-(defn main []
-  (println (reduce + (filter sieve (range 1 1000)))))
-
-(main)
+(println (reduce + (filter sieve (range 1 1000))))

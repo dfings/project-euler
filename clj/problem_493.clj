@@ -1,3 +1,5 @@
+(ns problem-493)
+
 (def NUM_COLORS 7)
 (def NUM_PER_COLOR 10)
 (def NUM_TO_PICK 20)
@@ -44,11 +46,8 @@
       ;; Otherwise we need to sum up the values of all leaves rooted at this subtree.
       (sum-tuples (map compute-counts (generate-children urn)))))))
 
-(defn main []
-  (let [starting-urn (repeat 7 10)
-        counts (compute-counts starting-urn)]
-    (printf "Total colors = %s\n" (first counts))
-    (printf "Total leaves = %s\n" (second counts))
-    (printf "Average = %s\n" (double (reduce / counts)))))
-
-(main)
+(let [starting-urn (repeat 7 10)
+      counts (compute-counts starting-urn)]
+  (printf "Total colors = %s\n" (first counts))
+  (printf "Total leaves = %s\n" (second counts))
+  (printf "Average = %s\n" (double (reduce / counts))))

@@ -27,6 +27,5 @@
         (if (zero? x) 0 (count-paths2 (dec x) y))
         (if (zero? y) 0 (count-paths2 x (dec y))))))))
 
-(defn -main [& args]
-  (println (count-paths 20))
-  (println (count-paths2 20 20)))
+(println (count-paths 20))
+(println (count-paths2 20 20))

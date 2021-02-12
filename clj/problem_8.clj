@@ -31,5 +31,4 @@
       (subs s 0 n) 
       (get-all-substrings-of-length (subs s 1) n)))))
 
-(defn -main [& args]
-  (println (reduce max (map strings/compute-product (get-all-substrings-of-length long-number 13)))))
+(println (reduce max (map strings/compute-product (get-all-substrings-of-length long-number 13))))
