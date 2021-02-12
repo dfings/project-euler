@@ -1,6 +1,6 @@
 #!/usr/bin/env python 
 
-from primes import primes2
+from primes import primes
 
 def get_index(iterator, i):
   for j, elt in enumerate(iterator):
@@ -9,7 +9,7 @@ def get_index(iterator, i):
 
 
 def main():
-  print(get_index(primes2(), 10000))
+  print(get_index(primes(), 10000))
   
 
 if __name__ == '__main__':

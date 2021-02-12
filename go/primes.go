@@ -1,18 +1,18 @@
 package main
 
-type SievePrimeGenerator struct {
+type PrimeGenerator struct {
 	current int
 	sieve   map[int][]int
 }
 
-func NewSievePrimeGenerator() *SievePrimeGenerator {
-	var gen SievePrimeGenerator
-	gen.current = 1
-	gen.sieve = make(map[int][]int)
-	return &gen
+func NewPrimeGenerator() *PrimeGenerator {
+	var primes PrimeGenerator
+	primes.current = 1
+	primes.sieve = make(map[int][]int)
+	return &primes
 }
 
-func (self *SievePrimeGenerator) Next() int {
+func (self *PrimeGenerator) Next() int {
 	for {
 		self.current = self.current + 1
 		existingFactors := self.sieve[self.current]
@@ -25,40 +25,6 @@ func (self *SievePrimeGenerator) Next() int {
 				compositeFactors := self.sieve[self.current+factor]
 				self.sieve[self.current+factor] = append(compositeFactors, factor)
 			}
-		}
-	}
-}
-
-type PrimeGenerator struct {
-	current int
-	primes  []int
-}
-
-func NewPrimeGenerator() *PrimeGenerator {
-	var gen PrimeGenerator
-	gen.current = 1
-	gen.primes = make([]int, 0)
-	return &gen
-}
-
-func (self *PrimeGenerator) isCurrentPrime() bool {
-	for _, prime := range self.primes {
-		if self.current%prime == 0 {
-			return false
-		}
-		if prime*prime > self.current {
-			return true
-		}
-	}
-	return true
-}
-
-func (self *PrimeGenerator) Next() int {
-	for {
-		self.current = self.current + 1
-		if self.isCurrentPrime() {
-			self.primes = append(self.primes, self.current)
-			return self.current
 		}
 	}
 }
