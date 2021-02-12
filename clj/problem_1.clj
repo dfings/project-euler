@@ -1,4 +1,5 @@
-;; clj -M problem_1.clj
+;; $ alias runclojure='clj -Scp `clj -Spath`:. -M'
+;; $ runclojure problem_1.clj
 (ns problem-1)
 
 (defn sieve [i]
