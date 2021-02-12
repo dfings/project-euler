@@ -1,6 +1,6 @@
 import com.google.common.collect.ArrayListMultimap
 
-fun Primes(): Sequence<Long> = sequence {
+fun primes(): Sequence<Long> = sequence {
   var current: Long = 2L
   var knownPrimeFactors = ArrayListMultimap.create<Long, Long>()
 

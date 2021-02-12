@@ -4,4 +4,4 @@
 
 @file:Import("factor.main.kts")
 
-println(PrimeFactors(600851475143).last())
+println(primeFactors(600851475143).last())

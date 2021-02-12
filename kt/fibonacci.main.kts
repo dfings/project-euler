@@ -1,4 +1,4 @@
-fun Fibonacci(): Sequence<Long> = sequence {
+fun fibonacci(): Sequence<Long> = sequence {
   var state = Pair(0L, 1L) // current, next
   while (true) {
     yield(state.first)
