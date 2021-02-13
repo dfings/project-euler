@@ -1,10 +1,7 @@
 module Factor (factor) where
 
-import Primes
-
-factor num = factor' num primes
+factor num = factor' num 2
   where factor' 1 _ = []
-        factor' x p = if (mod x current_prime) == 0 
-          then current_prime : factor' (div x current_prime) p
-          else factor' x (tail p)
-          where current_prime = head p
+        factor' x i = if (mod x i) == 0 
+          then i : factor' (div x i) i 
+          else factor' x (i + 1)
