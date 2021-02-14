@@ -1,20 +1,16 @@
-import com.google.common.collect.ArrayListMultimap
-
 fun primes(): Sequence<Long> = sequence {
-  var current: Long = 2L
-  var knownPrimeFactors = ArrayListMultimap.create<Long, Long>()
-
-  while (true) {
+  val knownPrimeFactors = hashMapOf<Long, HashSet<Long>>()
+  fun addKnownPrimeFactor(composite: Long, prime: Long) {
+    knownPrimeFactors.getOrPut(composite) { hashSetOf<Long>() }.add(prime)
+  }
+  for (current in generateSequence(2L, Long::inc)) {
     val primeFactors = knownPrimeFactors[current]
-    if (primeFactors.isEmpty()) {
+    if (primeFactors == null) {
       yield(current)
-      knownPrimeFactors.put(current * current, current)
+      addKnownPrimeFactor(current * current, current)
     } else {
-      knownPrimeFactors.removeAll(current)  // Reclaim memory
-      for (primeFactor in primeFactors) {
-        knownPrimeFactors.put(current + primeFactor, primeFactor)
-      }
+      primeFactors.forEach { addKnownPrimeFactor(current * it, it) }
+      knownPrimeFactors.remove(current)  // Reclaim memory
     }    
-    current += 1
   }
 }
