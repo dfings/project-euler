@@ -15,8 +15,8 @@ fun primeFactors(value: Long): Sequence<Long> = sequence {
 private data class FactorState(val n: Long, val i: Long, val out: List<Long>) {
   fun done() = n == 1L
   fun next() = if (n % i == 0L) hit() else miss()
-  fun miss() = FactorState(n, i + 1, out)
   fun hit() = FactorState(n / i, i, out + i)
+  fun miss() = FactorState(n, i + 1, out)
 }
 
 fun primeFactorsTailRec(value: Long): List<Long> {
