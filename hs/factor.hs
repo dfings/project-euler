@@ -1,4 +1,4 @@
-module Factor (factor) where
+module Factor where
 
 factor num = factor' num 2
   where factor' 1 _ = []
