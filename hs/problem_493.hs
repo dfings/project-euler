@@ -12,15 +12,16 @@ allBallsPicked = (==) (numColors * numPerColor - numToPick) . sum
 countColorsPicked = toInteger . length . filter ((/=) numPerColor)
 leaf urn = ((countColorsPicked urn), 1)
 
-getNextStates uhead ballCount utail =
-  if ballCount == 0 then [] 
-  else if utail == [] then oneChildStatePerBall (uhead ++ [ballCount - 1])
-  else oneChildStatePerBall (uhead ++ [ballCount - 1] ++ utail)
+getNextStates uhead ballCount utail
+  | ballCount == 0 = [] 
+  | utail == [] = oneChildStatePerBall (uhead ++ [ballCount - 1])
+  | otherwise = oneChildStatePerBall (uhead ++ [ballCount - 1] ++ utail)
   where oneChildStatePerBall = replicate ballCount
 
 -- Generates one new urn state for each possible ball that could be picked.
-childGenerator uhead ballCount utail =
-  if utail == [] then allChildStatesForColor else allChildStatesForColor ++ remaining
+childGenerator uhead ballCount utail
+  | utail == [] = allChildStatesForColor 
+  | otherwise = allChildStatesForColor ++ remaining
   where allChildStatesForColor = getNextStates uhead ballCount utail
         remaining = childGenerator (uhead ++ [ballCount]) (head utail) (tail utail)        
 
@@ -47,9 +48,9 @@ computeCountsWithCache urn cache =
       where children = getChildren urn
             (totals, newCache) = mergeChildResults urn cache children
 
-mergeChildResults urn cache (child:rest) = 
-  if rest == [] then (childTotals, childCache)
-  else (sumTuple childTotals restTotals, restCache)
+mergeChildResults urn cache (child:rest)
+  | rest == [] = (childTotals, childCache)
+  | otherwise = (sumTuple childTotals restTotals, restCache)
   where (childTotals, childCache) = computeCountsWithCache child cache
         (restTotals, restCache) = mergeChildResults urn childCache rest
 
