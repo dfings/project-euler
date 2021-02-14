@@ -28,10 +28,9 @@ fun primeFactorsTailRec(value: Long): List<Long> =
   primeFactorsStateMachine(FactorState(value, 2, listOf<Long>())).out
 
 
-// Note converting Sequence to List results in StackOverflowError
 fun primeFactorsLazyWith(n: Long, i: Long): Sequence<Long> = when {
   n == 1L -> sequenceOf<Long>()
-  n % i == 0L -> sequenceOf(i) + primeFactorsLazyWith(n / i, i)
+  n % i == 0L -> sequence { yield(i); yieldAll(primeFactorsLazyWith(n / i, i)) }
   else -> primeFactorsLazyWith(n, i + 1)
 }
 
