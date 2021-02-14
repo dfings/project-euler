@@ -1,8 +1,4 @@
-(ns problem-2)
+(ns problem-2
+    [:require fibonacci])
 
-(defn gen-fib [a b]
-	(if (>= b 4000000)
-    []
-    (cons b (gen-fib b (+ a b)))))
-
-(println (reduce + (filter even? (gen-fib 1 1))))
+(println (reduce + (filter even? (take-while (partial >= 4000000) (fibonacci/fibonacci)))))
