@@ -1,5 +1,7 @@
 module Fibonacci where
 
+fibonacci :: [Integer]
 fibonacci =
-  gen 0 1
-  where gen a b = a : gen b (a + b)
+  fibonacci' 0 1
+  where fibonacci' :: Integer -> Integer -> [Integer]
+        fibonacci' a b = a : fibonacci' b (a + b)

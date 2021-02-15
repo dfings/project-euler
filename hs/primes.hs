@@ -1,19 +1,23 @@
 module Primes where
 
-import qualified Data.Map.Strict as Map
+import qualified Data.IntMap.Strict as Map
 
-addToSieve sieve _ [] = sieve
-addToSieve sieve nonPrime (p:ps) =
-  addToSieve sieve'' nonPrime ps
-  where composite = nonPrime + p
-        existingFactors = Map.findWithDefault [] composite sieve
-        sieve' = Map.insert composite (p : existingFactors) sieve
-        sieve'' = Map.delete nonPrime sieve'
+type Sieve = Map.IntMap [Int]
+type SieveAndPrime = (Sieve, Int)
 
-nextPrime (sieve, i) =
-  case Map.lookup i sieve of
-    Nothing -> (Map.insert (i * i) [i] sieve, i)
-    Just existingFactors -> nextPrime ((addToSieve sieve i existingFactors), (i + 1))
-
-primes = gen (nextPrime (Map.empty, 2))
-  where gen (sieve, currentPrime) = currentPrime : gen (nextPrime (sieve, currentPrime + 1))
+primes :: [Int]
+primes = primes' (nextPrime (Map.empty, 2))
+  where primes' :: SieveAndPrime -> [Int]
+        primes' (sieve, currentPrime) = currentPrime : primes' (nextPrime (sieve, currentPrime + 1))
+        nextPrime :: SieveAndPrime -> SieveAndPrime
+        nextPrime (sieve, i) =
+          case Map.lookup i sieve of
+            Nothing -> (Map.insert (i * i) [i] sieve, i)
+            Just existingFactors -> nextPrime ((addToSieve sieve i existingFactors), (i + 1))
+        addToSieve :: Sieve -> Int -> [Int] -> Sieve
+        addToSieve sieve _ [] = sieve
+        addToSieve sieve nonPrime (p:ps) = addToSieve sieve'' nonPrime ps
+          where composite = nonPrime + p
+                existingFactors = Map.findWithDefault [] composite sieve
+                sieve' = Map.insert composite (p : existingFactors) sieve
+                sieve'' = Map.delete nonPrime sieve'
