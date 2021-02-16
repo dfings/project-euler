@@ -9,7 +9,7 @@ fun primes(): Sequence<Long> = sequence {
       yield(current)
       addKnownPrimeFactor(current * current, current)
     } else {
-      primeFactors.forEach { addKnownPrimeFactor(current * it, it) }
+      primeFactors.forEach { addKnownPrimeFactor(current + it, it) }
       knownPrimeFactors.remove(current)  // Reclaim memory
     }    
   }
