@@ -16,4 +16,5 @@
         (= i-squared n) [i]
         (zero? (mod n i)) (lazy-seq (cons i (cons (/ n i) (factor-with n (inc i)))))
         :else (recur n (inc i)))))
-  (factor-with n 2))
+  (let [factor-seq (factor-with n 2)]
+    (if (empty? factor-seq) [n] factor-seq)))
