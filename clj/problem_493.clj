@@ -26,7 +26,9 @@
 
 ;; Tuple support.
 (defn sum-tuples [tuples]
-  (reduce #(map + %1 %2) tuples))
+  (reduce 
+    (fn [a b] (map + a b)) 
+    tuples))
 
 ;; Computes (total-colors-picked, total-leaves) for leaves rooted at this subtree.
 (def urn-stats 
