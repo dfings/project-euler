@@ -43,6 +43,7 @@ fun urnStats(urn: Urn): UrnStats = urnCache.getOrPut(urn.cacheKey()) {
   } else {
     var totalColorsPicked = 0.toBigDecimal()
     var totalPicks = 0.toBigDecimal()
+    // Branch by each possible pick.
     for (color in 0..NUM_COLORS-1) {
       for (unused in 1..urn.slots[color]) {
         val child = urn.pick(color)
@@ -59,4 +60,5 @@ val urn = Urn(IntArray(NUM_COLORS) { NUM_PER_COLOR }.asList())
 val stats = urnStats(urn)
 println("Total colors = ${stats.totalColorsPicked}")
 println("Total picks = ${stats.totalPicks}")
+println("Cache size = ${urnCache.size}")
 println("Average = %.9f".format(stats.average()))
