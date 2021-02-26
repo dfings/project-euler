@@ -1,18 +1,18 @@
 #!/usr/bin/env kotlin
 
-@file:Import("memoize.main.kts")
+import java.util.TreeMap
 
-fun collatzLength(n: Long): Long = memoizedCollatzLength(n)
-val memoizedCollatzLength = { n: Long -> 
-  when(n) {
-    1L -> 1L
-    else -> 1L + collatzLength(nextCollatzTerm(n))
+object CollatzLength {
+  val cache = TreeMap<Long, Long>()
+
+  fun compute(n: Long): Long = cache.getOrPut(n) {
+    if (n == 1L) 1L else 1L + compute(next(n))
   }
-}.memoize()
 
-fun nextCollatzTerm(n: Long) = when {
-  n % 2L == 0L -> n / 2L
-  else -> 3L * n + 1L
+  fun next(n: Long) = when {
+    n % 2L == 0L -> n / 2L
+    else -> 3L * n + 1L
+  }
 }
 
-println((1L..1000000L).asSequence().maxByOrNull(::collatzLength))
+println((1L..1000000L).asSequence().maxByOrNull(CollatzLength::compute))
