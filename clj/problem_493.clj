@@ -13,41 +13,36 @@
 (defn count-colors-picked [urn]
   (bigint (count (filter #(<  % NUM_PER_COLOR) urn))))
 
-;; Gets the next urn states giving that we're considering picking a ball at the given position
-;; that has the given number currentlyl left in the urn.
-(defn get-next-states [head ball-count tail]
-  (if (= ball-count 0) []
-    (if (empty? tail) 
-      (repeat ball-count (concat head [(- ball-count 1)]))
-      (repeat ball-count (concat head [(- ball-count 1)] tail)))))
-
-;; Generates one new urn state for each possible ball that could be picked.
-(defn child-gen [head ball-count tail]
-  (let [next-states (get-next-states head ball-count tail)]
-    (if (empty? tail)
-      next-states
-      (concat next-states (child-gen (concat head [ball-count]) (first tail) (rest tail))))))
-
-;; Helper for using childGenerator on an urn. We sort the input so that compute-counts
-;; can memoize properly.
-(defn generate-children [urn]
-  (map sort (child-gen [] (first urn) (rest urn))))
+;; Returns the urn state after the given color is picked.
+(defn pick [urn color] 
+  (map-indexed 
+    (fn [idx, count] 
+      (if (= idx color) 
+        (dec count) 
+        count))
+    urn))
 
 ;; Tuple support.
 (defn sum-tuples [tuples]
   (reduce #(map + %1 %2) tuples))
 
 ;; Computes (total-colors-picked, total-leaves) for leaves rooted at this subtree.
-(def compute-counts 
+(def urn-stats 
   (memoize (fn [urn]
     (if (all-balls-picked urn)
       ;; If this is a leaf, then we can just count the colors directly.
       (list (count-colors-picked urn) (bigint 1)),
       ;; Otherwise we need to sum up the values of all leaves rooted at this subtree.
-      (sum-tuples (map compute-counts (generate-children urn)))))))
+      (sum-tuples 
+        (mapcat 
+          (fn [color] 
+            (map 
+              (fn [_] (urn-stats (sort (pick urn color))) )  ;; sort to get more cache hits
+              (range 0 (nth urn color))))
+          (range 0 NUM_COLORS)))))))
 
-(let [starting-urn (repeat 7 10)
-      counts (compute-counts starting-urn)]
+(let [starting-urn (repeat NUM_COLORS NUM_PER_COLOR)
+      counts (urn-stats starting-urn)]
   (printf "Total colors = %s\n" (first counts))
   (printf "Total leaves = %s\n" (second counts))
   (printf "Average = %s\n" (double (reduce / counts))))
