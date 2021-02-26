@@ -16,6 +16,10 @@ def count_colors(urn):
   return len([val for val in urn if val < NUM_PER_COLOR])
 
 
+def pick(urn, color):
+  return [count - 1 if index == color else count 
+          for index, count in enumerate(urn) ]
+
 def compute_counts(urn):
   key = tuple(sorted(urn))
   counts = cache.get(key)
@@ -23,14 +27,10 @@ def compute_counts(urn):
     if all_balls_picked(urn):
       counts = [count_colors(urn), 1]
     else:
-      counts = [0, 0]
-      for i in range(len(urn)):
-        for _ in range(urn[i]):
-          urn[i] -= 1
-          child_counts = compute_counts(urn)
-          counts[0] += child_counts[0]
-          counts[1] += child_counts[1]
-          urn[i] += 1
+      child_counts = [compute_counts(pick(urn, i))
+                      for i in range(len(urn))
+                      for _ in range(urn[i])]
+      counts = list(map(sum, zip(*child_counts)))
     cache[key] = counts
   return counts
     
