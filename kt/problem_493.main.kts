@@ -29,6 +29,8 @@ class Urn(val slots: List<Int>) {
  */
 data class UrnStats(val totalColorsPicked: BigDecimal, val totalPicks: BigDecimal) {
   fun average() = totalColorsPicked.divide(totalPicks, 12, RoundingMode.UP)
+  operator fun plus(other: UrnStats) = 
+    UrnStats(totalColorsPicked + other.totalColorsPicked, totalPicks + other.totalPicks)
 }
 
 /** 
@@ -41,18 +43,10 @@ fun urnStats(urn: Urn): UrnStats = urnCache.getOrPut(urn.cacheKey()) {
   if (urn.allPicked()) {
     UrnStats(urn.colorsPicked().toBigDecimal(), 1.toBigDecimal())
   } else {
-    var totalColorsPicked = 0.toBigDecimal()
-    var totalPicks = 0.toBigDecimal()
     // Branch by each possible pick.
-    for (color in 0..NUM_COLORS-1) {
-      for (unused in 1..urn.slots[color]) {
-        val child = urn.pick(color)
-        val childStats = urnStats(child)
-        totalColorsPicked += childStats.totalColorsPicked
-        totalPicks += childStats.totalPicks
-      }
-    }
-    UrnStats(totalColorsPicked, totalPicks)
+    (0..NUM_COLORS - 1).flatMap { color ->
+      (1..urn.slots[color]).map { urnStats(urn.pick(color)) }
+    }.reduce(UrnStats::plus)
   }
 }
 
