@@ -13,7 +13,7 @@ def all_balls_picked(urn):
     
 
 def count_colors(urn):
-  return len([val for val in urn if val < NUM_PER_COLOR])
+  return sum(val < NUM_PER_COLOR for val in urn)
 
 
 def pick(urn, color):
