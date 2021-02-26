@@ -15,31 +15,31 @@ class Urn(val slots: List<Int>) {
   fun pick(color: Int) = Urn(slots.mapIndexed { i, count -> if (i == color) count - 1 else count })
 }
 
-data class ChildStats(val totalColors: BigDecimal, val totalLeaves: BigDecimal) {
-  fun average() = totalColors.divide(totalLeaves, 12, RoundingMode.UP)
+data class UrnStats(val totalColorsPicked: BigDecimal, val totalPicks: BigDecimal) {
+  fun average() = totalColorsPicked.divide(totalPicks, 12, RoundingMode.UP)
 }
 
-val urnCache = hashMapOf<List<Int>, ChildStats>()
-fun urnStats(urn: Urn): ChildStats = urnCache.getOrPut(urn.cacheKey()) {
+val urnCache = hashMapOf<List<Int>, UrnStats>()
+fun urnStats(urn: Urn): UrnStats = urnCache.getOrPut(urn.cacheKey()) {
   if (urn.allPicked()) {
-    ChildStats(urn.colorsPicked().toBigDecimal(), 1.toBigDecimal())
+    UrnStats(urn.colorsPicked().toBigDecimal(), 1.toBigDecimal())
   } else {
-    var totalColors = 0.toBigDecimal()
-    var totalLeaves = 0.toBigDecimal()
+    var totalColorsPicked = 0.toBigDecimal()
+    var totalPicks = 0.toBigDecimal()
     for (color in 0..NUM_COLORS-1) {
       for (unused in 1..urn.slots[color]) {
         val child = urn.pick(color)
         val childStats = urnStats(child)
-        totalColors += childStats.totalColors
-        totalLeaves += childStats.totalLeaves
+        totalColorsPicked += childStats.totalColorsPicked
+        totalPicks += childStats.totalPicks
       }
     }
-    ChildStats(totalColors, totalLeaves)
+    UrnStats(totalColorsPicked, totalPicks)
   }
 }
 
 val urn = Urn(IntArray(NUM_COLORS) { NUM_PER_COLOR }.asList())
 val stats = urnStats(urn)
-println("Total colors = ${stats.totalColors}")
-println("Total picks = ${stats.totalLeaves}")
+println("Total colors = ${stats.totalColorsPicked}")
+println("Total picks = ${stats.totalPicks}")
 println("Average = %.9f".format(stats.average()))
