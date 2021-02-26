@@ -20,6 +20,7 @@ def pick(urn, color):
   return [count - 1 if index == color else count 
           for index, count in enumerate(urn) ]
 
+
 def compute_counts(urn):
   key = tuple(sorted(urn))
   counts = cache.get(key)
