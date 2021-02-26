@@ -11,7 +11,7 @@
 
 ;; Counts the number of distinct colors that have been picked from the urn.
 (defn count-colors-picked [urn]
-  (bigint (count (filter #(<  % NUM_PER_COLOR) urn))))
+  (bigint (count (filter (fn [color] (< color NUM_PER_COLOR)) urn))))
 
 ;; Returns the urn state after the given color is picked.
 (defn pick [urn color] 
