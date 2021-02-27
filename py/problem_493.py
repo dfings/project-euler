@@ -17,13 +17,13 @@ def count_colors(urn):
 
 
 def pick(urn, color):
-  return [count - 1 if index == color else count 
-          for index, count in enumerate(urn) ]
+  return tuple(count - 1 if index == color else count 
+               for index, count in enumerate(urn))
 
 
-def sum_tuples(iters):
-  return tuple(map(sum, zip(*iters)))
-  
+def sum_tuples(tuples):
+  return tuple(map(sum, zip(*tuples)))
+
 
 def compute_counts(urn):
   return compute_counts_cached(tuple(sorted(urn)))
