@@ -1,11 +1,11 @@
 #!/usr/bin/env python 
 
+from functools import cache
+
 NUM_COLORS = 7
 NUM_PER_COLOR = 10
 NUM_TO_PICK = 20
 SUM_ALL_PICKED = NUM_COLORS * NUM_PER_COLOR - NUM_TO_PICK
-
-cache = {}
 
 
 def all_balls_picked(urn):
@@ -21,20 +21,23 @@ def pick(urn, color):
           for index, count in enumerate(urn) ]
 
 
+def sum_tuples(iters):
+  return tuple(map(sum, zip(*iters)))
+  
+
 def compute_counts(urn):
-  key = tuple(sorted(urn))
-  counts = cache.get(key)
-  if not counts:  
-    if all_balls_picked(urn):
-      counts = [count_colors(urn), 1]
-    else:
-      child_counts = [compute_counts(pick(urn, i))
+  return compute_counts_cached(tuple(sorted(urn)))
+
+
+@cache
+def compute_counts_cached(urn):
+  if all_balls_picked(urn):
+    return (count_colors(urn), 1)
+  else:
+    return sum_tuples(compute_counts(pick(urn, i))
                       for i in range(len(urn))
-                      for _ in range(urn[i])]
-      counts = list(map(sum, zip(*child_counts)))
-    cache[key] = counts
-  return counts
-    
+                      for _ in range(urn[i]))
+
   
 if __name__ == '__main__':
   starting_urn = [NUM_PER_COLOR] * NUM_COLORS
