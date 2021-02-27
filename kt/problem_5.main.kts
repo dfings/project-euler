@@ -7,4 +7,4 @@ tailrec fun gcd(x: Int, y: Int): Int = when {
 
 fun lcm(x: Int, y: Int): Int = (x * y) / gcd(x, y)
 
-println((2..20).reduce(::lcm))
+println((1..19).reduce(::lcm))
