@@ -1,8 +1,6 @@
 #!/usr/bin/env python
 
-total, a, b = 0, 1, 1
-while b < 4000000:
-  if not b % 2:
-    total += b
-  a, b = b, a + b
-print(total)
+from fibonacci import fibonacci
+from itertools import takewhile
+
+print(sum(filter(lambda x: x % 2 == 0, takewhile(lambda x: x < 4000000, fibonacci()))))
