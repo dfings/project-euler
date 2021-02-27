@@ -39,9 +39,8 @@ def compute_counts_cached(urn):
                       for _ in range(urn[i]))
 
   
-if __name__ == '__main__':
-  starting_urn = [NUM_PER_COLOR] * NUM_COLORS
-  counts = compute_counts(starting_urn)
-  print("Total colors = {}".format(counts[0]))
-  print("Total picks = {}".format(counts[1]))
-  print("Average = {0:0.9f}".format(float(counts[0]) / counts[1]))
+starting_urn = [NUM_PER_COLOR] * NUM_COLORS
+counts = compute_counts(starting_urn)
+print("Total colors = {}".format(counts[0]))
+print("Total picks = {}".format(counts[1]))
+print("Average = {0:0.9f}".format(float(counts[0]) / counts[1]))
