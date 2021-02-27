@@ -1,6 +1,6 @@
 import qualified Data.Char as Char
 
-longString = 
+longString =
   "73167176531330624919225119674426574742355349194934\
   \96983520312774506326239578318016984801869478851843\
   \85861560789112949495459501737958331952853208805511\
@@ -23,10 +23,12 @@ longString =
   \71636269561882670428252483600823257530420752963450"
 
 allStringsOfLength n str =
-  if length str < n then []
-  else take n str : allStringsOfLength n (drop 1 str)
+  if length str < n
+    then []
+    else take n str : allStringsOfLength n (drop 1 str)
 
 stringToDigits = map Char.digitToInt
+
 maxProductOfDigits strs = maximum (map (product . stringToDigits) strs)
 
 main = do print $ maxProductOfDigits (allStringsOfLength 13 longString)

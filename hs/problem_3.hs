@@ -1,3 +1,3 @@
-import Factor  -- factor.hs
+import Factor -- factor.hs
 
-main = print $ head $ reverse $ factor $ 600851475143
+main = print $ last (factor 600851475143)
