@@ -1,4 +1,4 @@
-#!/usr/bin/env python 
+#!/usr/bin/env python
 
 from itertools import accumulate, count, dropwhile
 from factor import factor
