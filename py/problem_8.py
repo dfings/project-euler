@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 
 from math import prod
+from strings import product_of_digits
 
 LONG_NUMBER = (
     "73167176531330624919225119674426574742355349194934"
@@ -24,10 +25,6 @@ LONG_NUMBER = (
     + "05886116467109405077541002256983155200055935729725"
     + "71636269561882670428252483600823257530420752963450"
 )
-
-
-def product_of_digits(s: str) -> int:
-    return prod(map(int, s))
 
 
 def all_substrs(s: str, n: int):

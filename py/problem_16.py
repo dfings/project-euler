@@ -1,5 +1,6 @@
 #!/usr/bin/env python
 
 from math import pow
+from strings import sum_of_digits
 
-print(sum(map(int, str(int(pow(2, 1000))))))
+print(sum_of_digits(int(pow(2, 1000))))
