@@ -44,7 +44,7 @@ data class Position(val x: Int, val y: Int) {
 }
 
 val range = (0..SIZE - 1)
-val result = cartesianProduct(range, range)
+val result = (range cartesianProduct range)
   .map { Position(it.first, it.second) }
   .maxByOrNull(Position::max)
 println(result)
