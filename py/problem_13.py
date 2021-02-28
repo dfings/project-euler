@@ -4,7 +4,7 @@ import os
 
 
 def load_numbers():
-    with open(os.path.join(os.path.dirname(__file__), '../data/problem_13_data')) as f:
+    with open(os.path.join(os.path.dirname(__file__), "../data/problem_13_data")) as f:
         return map(int, f.read().splitlines())
 
 

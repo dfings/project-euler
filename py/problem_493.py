@@ -17,8 +17,9 @@ def count_colors(urn):
 
 
 def pick(urn, color):
-    return tuple(count - 1 if index == color else count
-                 for index, count in enumerate(urn))
+    return tuple(
+        count - 1 if index == color else count for index, count in enumerate(urn)
+    )
 
 
 def sum_tuples(tuples):
@@ -34,13 +35,13 @@ def compute_counts_cached(urn):
     if all_balls_picked(urn):
         return (count_colors(urn), 1)
     else:
-        return sum_tuples(compute_counts(pick(urn, i))
-                          for i in range(len(urn))
-                          for _ in range(urn[i]))
+        return sum_tuples(
+            compute_counts(pick(urn, i)) for i in range(len(urn)) for _ in range(urn[i])
+        )
 
 
 starting_urn = [NUM_PER_COLOR] * NUM_COLORS
 counts = compute_counts(starting_urn)
-print('Total colors = {}'.format(counts[0]))
-print('Total picks = {}'.format(counts[1]))
-print('Average = {0:0.9f}'.format(float(counts[0]) / counts[1]))
+print("Total colors = {}".format(counts[0]))
+print("Total picks = {}".format(counts[1]))
+print("Average = {0:0.9f}".format(float(counts[0]) / counts[1]))

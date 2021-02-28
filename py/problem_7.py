@@ -9,9 +9,4 @@ def get_index(iterator, i):
             return elt
 
 
-def main():
-    print(get_index(primes(), 10000))
-
-
-if __name__ == '__main__':
-    main()
+print(get_index(primes(), 10000))
