@@ -51,8 +51,10 @@ def vertical(x, y):
     return compute(y <= MAX, lambda i: GRID[y + i][x])
 
 
-def best(x, y):
-    return max(horizontal(x, y), diagonal_down(x, y), diagonal_up(x, y), vertical(x, y))
+def best(point):
+    return max(f(*point) for f in (horizontal, diagonal_down, diagonal_up, vertical))
 
 
-print(max(best(x, y) for x, y in product(range(0, SIZE), range(0, SIZE))))
+point = max((p for p in product(range(SIZE), range(SIZE))), key=best)
+print(point)
+print(best(point))
