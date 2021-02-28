@@ -31,7 +31,7 @@ def product_of_digits(s: str) -> int:
 
 
 def all_substrs(s: str, n: int):
-    return (s[i : i + n] for i in range(0, len(s) - n - 1))
+    return (s[i : i + n] for i in range(len(s) - n - 1))
 
 
 print(max(map(product_of_digits, all_substrs(LONG_NUMBER, 13))))
