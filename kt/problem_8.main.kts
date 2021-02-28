@@ -1,5 +1,7 @@
 #!/usr/bin/env kotlin
 
+@file:Import("strings.main.kts")
+
 val LONG_NUMBER = 
   "73167176531330624919225119674426574742355349194934" +
   "96983520312774506326239578318016984801869478851843" +
@@ -22,7 +24,5 @@ val LONG_NUMBER =
   "05886116467109405077541002256983155200055935729725" +
   "71636269561882670428252483600823257530420752963450"
 
-fun String.toDigits() = map(Character::getNumericValue)
-fun String.productOfDigits() = toDigits().map { it.toLong() }.reduce(Long::times)
 fun String.allSubstrings(n: Int) = (0..length - n).asSequence().map { substring(it, it + n) }
 println(LONG_NUMBER.allSubstrings(13).map { it.productOfDigits() }.maxOrNull())
