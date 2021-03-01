@@ -31,24 +31,32 @@ WINDOW = 4
 MAX = SIZE - WINDOW
 
 
-def compute(cond, get_grid_value):
-    return prod(get_grid_value(i) for i in range(0, WINDOW)) if cond else 0
+def in_range(n):
+    return n >= 0 and n < SIZE
+
+
+def grid_value(x, y):
+    return GRID[y][x] if in_range(x) and in_range(y) else 0
+
+
+def compute(get_x, get_y):
+    return prod(grid_value(get_x(i), get_y(i)) for i in range(WINDOW))
 
 
 def horizontal(x, y):
-    return compute(x <= MAX, lambda i: GRID[y][x + i])
+    return compute(lambda i: x + i, lambda _: y)
 
 
 def diagonal_down(x, y):
-    return compute(x <= MAX and y <= MAX, lambda i: GRID[y + i][x + i])
+    return compute(lambda i: x + i, lambda i: y + i)
 
 
 def diagonal_up(x, y):
-    return compute(x <= MAX and y >= WINDOW - 1, lambda i: GRID[y - i][x + i])
+    return compute(lambda i: x + i, lambda i: y - i)
 
 
 def vertical(x, y):
-    return compute(y <= MAX, lambda i: GRID[y + i][x])
+    return compute(lambda _: x, lambda i: y + i)
 
 
 def best(point):
