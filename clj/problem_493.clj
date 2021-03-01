@@ -11,9 +11,7 @@
 
 ;; Counts the number of distinct colors that have been picked from the urn.
 (defn count-colors-picked [urn]
-  (bigint (count (filter
-                  (fn [color] (< color NUM_PER_COLOR))
-                  urn))))
+  (bigint (count (filter (partial > NUM_PER_COLOR) urn))))
 
 ;; Returns the urn state after the given color is picked.
 (defn pick [urn color]
@@ -26,9 +24,7 @@
 
 ;; Tuple support.
 (defn sum-tuples [tuples]
-  (reduce
-   (fn [a b] (map + a b))
-   tuples))
+  (reduce (partial map +) tuples))
 
 ;; Computes (total-colors-picked, total-leaves) for leaves rooted at this subtree.
 (def urn-stats
