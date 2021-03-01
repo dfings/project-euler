@@ -29,23 +29,24 @@ val WINDOW = 4
 val MAX = SIZE - WINDOW
 
 data class Position(val x: Int, val y: Int) {
-  fun horizontal() = compute(x <= MAX) { GRID[y][x + it] }
-  fun diagonalDown() = compute(x <= MAX && y <= MAX) { GRID[y + it][x + it] }
-  fun diagonalUp() = compute(x <= MAX && y >= WINDOW - 1) { GRID[y - it][x + it] }
-  fun vertical() = compute(y <= MAX) { GRID[y + it][x] }
-
-  fun max(): Int = sequenceOf(horizontal(), diagonalDown(), diagonalUp(), vertical())
+  fun best(): Int = sequenceOf(horizontal(), diagonalDown(), diagonalUp(), vertical())
     .filterNotNull().maxOrNull() ?: 0
 
-  inline fun compute(condition: Boolean, transform: (Int) -> Int) = when {
-    condition -> (0..WINDOW - 1).map(transform).reduce(Int::times)
-    else -> null
-  }
+  private fun horizontal() = score({ x + it }, {y})
+  private fun diagonalDown() = score({x + it}, {y + it})
+  private fun diagonalUp() = score({x + it}, {y - it})
+  private fun vertical() = score({x}, {y + it})
+
+  private inline fun score(getX: (Int) -> Int, getY: (Int) -> Int) =
+    (0..WINDOW - 1).map { gridValue(getX(it), getY(it)) }.reduce(Int::times)
+
+  private fun gridValue(x: Int, y: Int) = if (inRange(x) && inRange(y)) GRID[y][x] else 0  
+  private fun inRange(n: Int) = n >= 0 && n < SIZE
 }
 
 val range = (0..SIZE - 1)
 val result = (range cartesianProduct range)
   .map { Position(it.first, it.second) }
-  .maxByOrNull(Position::max)
+  .maxByOrNull(Position::best)
 println(result)
-println(result?.max())
+println(result?.best())
