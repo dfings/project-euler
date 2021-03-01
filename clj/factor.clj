@@ -2,7 +2,7 @@
 
 (defn prime-factor [n]
   (defn prime-factor-with [n i]
-    (cond 
+    (cond
       (= n 1) []
       (zero? (mod n i)) (lazy-seq (cons i (prime-factor-with (/ n i) i)))
       :else (recur n (inc i))))
@@ -16,5 +16,4 @@
         (= i-squared n) [i]
         (zero? (mod n i)) (lazy-seq (cons i (cons (/ n i) (factor-with n (inc i)))))
         :else (recur n (inc i)))))
-  (let [factor-seq (factor-with n 2)]
-    (if (empty? factor-seq) [n] factor-seq)))
+  (factor-with n 2))
