@@ -20,7 +20,7 @@ def factor(n):
     while i < limit:
         if n % i == 0:
             factors.append(i)
-            factors.append(n / i)
+            factors.append(n // i)
         i += 1
     if i * i == n:
         factors.append(i)
