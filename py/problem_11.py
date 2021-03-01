@@ -39,24 +39,24 @@ def grid_value(x, y):
     return GRID[y][x] if in_range(x) and in_range(y) else 0
 
 
-def compute(get_x, get_y):
+def score(get_x, get_y):
     return prod(grid_value(get_x(i), get_y(i)) for i in range(WINDOW))
 
 
 def horizontal(x, y):
-    return compute(lambda i: x + i, lambda _: y)
+    return score(lambda i: x + i, lambda _: y)
 
 
 def diagonal_down(x, y):
-    return compute(lambda i: x + i, lambda i: y + i)
+    return score(lambda i: x + i, lambda i: y + i)
 
 
 def diagonal_up(x, y):
-    return compute(lambda i: x + i, lambda i: y - i)
+    return score(lambda i: x + i, lambda i: y - i)
 
 
 def vertical(x, y):
-    return compute(lambda _: x, lambda i: y + i)
+    return score(lambda _: x, lambda i: y + i)
 
 
 def best(point):
