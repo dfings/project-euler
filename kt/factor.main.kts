@@ -14,5 +14,5 @@ fun factors(value: Long): Sequence<Long> {
     n % i == 0L -> sequence { yield(i); yield(n/i); yieldAll(recur(n, i + 1)) }
     else -> recur(n, i + 1)
   }
-  return recur(value, 2).ifEmpty { sequenceOf(value) }
+  return recur(value, 2)
 }
