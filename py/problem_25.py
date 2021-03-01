@@ -1,12 +1,6 @@
 #!/usr/bin/env python
 
 from fibonacci import fibonacci
+from itertools import takewhile
 
-
-def find_index() -> int:
-    for i, x in enumerate(fibonacci()):
-        if len(str(x)) >= 1000:
-            return i + 1
-
-
-print(find_index())
+print(1 + sum(1 for _ in takewhile(lambda x: len(str(x)) < 1000, fibonacci())))
