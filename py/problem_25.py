@@ -3,4 +3,5 @@
 from fibonacci import fibonacci
 from itertools import takewhile
 
-print(1 + sum(1 for _ in takewhile(lambda x: len(str(x)) < 1000, fibonacci())))
+LIMIT = 10 ** 999
+print(1 + sum(1 for _ in takewhile(lambda x: x < LIMIT, fibonacci())))
