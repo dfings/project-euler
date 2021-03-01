@@ -1,6 +1,5 @@
 #!/usr/bin/env python
 
-from math import prod
 from strings import product_of_digits
 
 LONG_NUMBER = (
