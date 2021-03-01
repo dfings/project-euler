@@ -1,15 +1,5 @@
 {
   "deno.enable": true,
-  "deno.import_intellisense_origins": {
-    "https://deno.land": true
-  },
-  "files.associations": {
-    "*.kts": "kotlin",
-  },
-  "python.autoComplete.extraPaths": [
-      "./py"
-  ],
-  "python.analysis.extraPaths": [
-    "./py"
-  ],
+  "python.autoComplete.extraPaths": ["./py"],
+  "python.analysis.extraPaths": ["./py"]
 }
