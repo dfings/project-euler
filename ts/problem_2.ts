@@ -1,6 +1,8 @@
 #!/usr/bin/env deno run
 
-let total = 0, a = 1, b = 1;
+let total = 0,
+  a = 1,
+  b = 1;
 while (b < 4000000) {
   if (b % 2 == 0) {
     total += b;
