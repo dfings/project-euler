@@ -2,8 +2,9 @@
   [:require factor])
 
 (def d
-  (memoize (fn [n]
-             (+ 1 (reduce + (factor/factors n))))))
+  (memoize
+   (fn [n]
+     (+ 1 (reduce + (factor/factors n))))))
 
 (defn amicable [n]
   (and

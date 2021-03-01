@@ -1,12 +1,14 @@
 (defn get-next [n]
   (if (even? n)
-    (/ n 2) 
+    (/ n 2)
     (+ (* n 3) 1)))
 
-(def collatz-length (memoize (fn [n]
-  (if (= n 1) 
-    1 
-    (+ 1 (collatz-length (get-next n)))))))
+(def collatz-length
+  (memoize
+   (fn [n]
+     (if (= n 1)
+       1
+       (+ 1 (collatz-length (get-next n)))))))
 
 (defn print-length [n]
   (printf "%s %s\n" (collatz-length n) n))

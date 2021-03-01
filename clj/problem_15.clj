@@ -20,10 +20,11 @@
 ;; Second solution computes the path count directly in a memoized manner.
 
 (def count-paths2
-  (memoize (fn [x y]
-    (if (and (zero? x) (zero? y))
-      1
-      (+
+  (memoize
+   (fn [x y]
+     (if (and (zero? x) (zero? y))
+       1
+       (+
         (if (zero? x) 0 (count-paths2 (dec x) y))
         (if (zero? y) 0 (count-paths2 x (dec y))))))))
 
