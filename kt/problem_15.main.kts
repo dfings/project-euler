@@ -1,10 +1,6 @@
 #!/usr/bin/env kotlin
 
-import java.math.BigInteger
-
-fun factorial(n: Int): BigInteger =
-    (1..n).map { it.toBigInteger() }.reduce(BigInteger::multiply)
-
+@file:Import("factorial.main.kts")
 
 val cache = hashMapOf<Pair<Int, Int>, Long>()
 fun countPaths(x: Int, y: Int): Long = cache.getOrPut(x to y) {
