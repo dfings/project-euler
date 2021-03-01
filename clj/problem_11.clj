@@ -33,13 +33,13 @@
     (aget GRID y x)
     0))
 
-(defn compute [x-loc, y-loc]
+(defn score [x-loc, y-loc]
   (reduce * (map (fn [i] (grid-value (x-loc i) (y-loc i))) (range WINDOW))))
 
-(defn horizontal [x, y] (compute (partial + x) (constantly y)))
-(defn diagonal-down [x, y] (compute (partial + x) (partial + y)))
-(defn diagonal-up [x, y] (compute (partial + x) (partial - y)))
-(defn vertical [x, y] (compute (constantly x) (partial + y)))
+(defn horizontal [x, y] (score (partial + x) (constantly y)))
+(defn diagonal-down [x, y] (score (partial + x) (partial + y)))
+(defn diagonal-up [x, y] (score (partial + x) (partial - y)))
+(defn vertical [x, y] (score (constantly x) (partial + y)))
 (defn best [x, y] (apply max ((juxt horizontal, diagonal-down, diagonal-up, vertical) x y)))
 
 (def points
