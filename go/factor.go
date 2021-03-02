@@ -1,5 +1,6 @@
 package main
 
+// PrimeFactor returns the list of prime factors of n (including duplicates).
 func PrimeFactor(n int) []int {
 	var factors []int
 	i := 2
@@ -14,6 +15,7 @@ func PrimeFactor(n int) []int {
 	return factors
 }
 
+// Factors returns the list of proper divisors of n, excluding 1.
 func Factors(n int) []int {
 	var factors []int
 	i := 2

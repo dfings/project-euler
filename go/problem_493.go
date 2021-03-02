@@ -6,66 +6,66 @@ import (
 )
 
 const (
-	NumColors    = 7
-	NumPerColor  = 10
-	NumToPick    = 20
-	SumAllPicked = NumColors*NumPerColor - NumToPick
+	numColors    = 7
+	numPerColor  = 10
+	numToPick    = 20
+	sumAllPicked = numColors*numPerColor - numToPick
 )
 
-type Counts struct {
+type counts struct {
 	colors, picks float64
 }
 
-var cache = make(map[[NumColors]int]Counts)
+var cache = make(map[[numColors]int]counts)
 
-func allBallsPicked(urn *[NumColors]int) bool {
+func allBallsPicked(urn *[numColors]int) bool {
 	sum := 0
-	for i := 0; i < NumColors; i++ {
-		sum += urn[i]
+	for _, v := range urn {
+		sum += v
 	}
-	return sum == SumAllPicked
+	return sum == sumAllPicked
 }
 
-func countColors(urn *[NumColors]int) int {
+func countColors(urn *[numColors]int) int {
 	count := 0
-	for i := 0; i < NumColors; i++ {
-		if urn[i] != NumPerColor {
+	for _, v := range urn {
+		if v != numPerColor {
 			count++
 		}
 	}
 	return count
 }
 
-func computeCounts(urn *[NumColors]int) Counts {
+func computeCounts(urn *[numColors]int) counts {
 	if allBallsPicked(urn) {
-		return Counts{float64(countColors(urn)), 1}
+		return counts{float64(countColors(urn)), 1}
 	}
 
-	var key [NumColors]int = *urn
+	var key [numColors]int = *urn
 	sort.Ints(key[:])
-	counts, ok := cache[key]
+	c, ok := cache[key]
 	if ok {
-		return counts
+		return c
 	}
 
-	counts = Counts{0, 0}
-	for i := 0; i < NumColors; i++ {
+	c = counts{0, 0}
+	for i := 0; i < numColors; i++ {
 		for j := 0; j < urn[i]; j++ {
 			urn[i]--
 			returned := computeCounts(urn)
-			counts.colors += returned.colors
-			counts.picks += returned.picks
+			c.colors += returned.colors
+			c.picks += returned.picks
 			urn[i]++
 		}
 	}
-	cache[key] = counts
-	return counts
+	cache[key] = c
+	return c
 }
 
 func main() {
-	var urn [NumColors]int
-	for i := 0; i < NumColors; i++ {
-		urn[i] = NumPerColor
+	var urn [numColors]int
+	for i := 0; i < numColors; i++ {
+		urn[i] = numPerColor
 	}
 	counts := computeCounts(&urn)
 	fmt.Printf("Total colors = %0.0f\n", counts.colors)

@@ -1,10 +1,12 @@
 package main
 
+// PrimeGenerator stores the state needed to produce an infinite iterator of primes.
 type PrimeGenerator struct {
 	current int
 	sieve   map[int][]int
 }
 
+// NewPrimeGenerator creates the state of the PrimeGenerator starting at 1.
 func NewPrimeGenerator() *PrimeGenerator {
 	var primes PrimeGenerator
 	primes.current = 1
@@ -12,19 +14,20 @@ func NewPrimeGenerator() *PrimeGenerator {
 	return &primes
 }
 
-func (self *PrimeGenerator) Next() int {
+// Next advancaes the state of the PrimeGenerator and returns the next prime.
+func (gen *PrimeGenerator) Next() int {
 	for {
-		self.current = self.current + 1
-		existingFactors := self.sieve[self.current]
+		gen.current = gen.current + 1
+		existingFactors := gen.sieve[gen.current]
 		if len(existingFactors) == 0 {
-			self.sieve[self.current*self.current] = append(existingFactors, self.current)
-			return self.current
-		} else {
-			delete(self.sieve, self.current)
-			for _, factor := range existingFactors {
-				compositeFactors := self.sieve[self.current+factor]
-				self.sieve[self.current+factor] = append(compositeFactors, factor)
-			}
+			gen.sieve[gen.current*gen.current] = append(existingFactors, gen.current)
+			return gen.current
 		}
+		delete(gen.sieve, gen.current)
+		for _, factor := range existingFactors {
+			compositeFactors := gen.sieve[gen.current+factor]
+			gen.sieve[gen.current+factor] = append(compositeFactors, factor)
+		}
+
 	}
 }

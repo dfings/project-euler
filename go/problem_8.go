@@ -5,8 +5,8 @@ import (
 	"strconv"
 )
 
-const Window = 13
-const LongNumber = "73167176531330624919225119674426574742355349194934" +
+const window = 13
+const longNumber = "73167176531330624919225119674426574742355349194934" +
 	"96983520312774506326239578318016984801869478851843" +
 	"85861560789112949495459501737958331952853208805511" +
 	"12540698747158523863050715693290963295227443043557" +
@@ -29,10 +29,10 @@ const LongNumber = "73167176531330624919225119674426574742355349194934" +
 
 func main() {
 	maxProduct := 0
-	for i := 0; i <= len(LongNumber)-Window; i++ {
+	for i := 0; i <= len(longNumber)-window; i++ {
 		product := 1
-		for j := i; j < i+Window; j++ {
-			val, _ := strconv.Atoi(LongNumber[j : j+1])
+		for j := i; j < i+window; j++ {
+			val, _ := strconv.Atoi(longNumber[j : j+1])
 			product *= val
 		}
 		if product > maxProduct {
