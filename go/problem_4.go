@@ -7,11 +7,9 @@ import (
 
 func isPalindrome(s string) bool {
 	i, j := 0, len(s)-1
-	for {
+	for i <= j {
 		if s[i] != s[j] {
 			return false
-		} else if i > j {
-			return true
 		}
 		i = i + 1
 		j = j - 1
