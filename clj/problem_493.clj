@@ -32,7 +32,7 @@
    (fn [urn]
      (if (all-balls-picked urn)
        ;; If this is a leaf, then we can just count the colors directly.
-       (list (count-colors-picked urn) (bigint 1)),
+       (list (count-colors-picked urn) 1N),
        ;; Otherwise we need to sum up the values of all leaves rooted at this subtree.
        (sum-tuples
         (mapcat

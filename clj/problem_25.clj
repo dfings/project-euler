@@ -1,6 +1,6 @@
 (ns problem-25
   [:require fibonacci])
 
-(def LIMIT (reduce * (repeat 999 (bigint 10))))
+(def LIMIT (reduce * (repeat 999 10N)))
 
-(println (+ (bigint 1) (count (take-while (partial > LIMIT) (fibonacci/big-fibonacci)))))
+(println (+ 1N (count (take-while (partial > LIMIT) (fibonacci/big-fibonacci)))))
