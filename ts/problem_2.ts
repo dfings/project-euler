@@ -1,13 +1,13 @@
 #!/usr/bin/env deno run
 
-let total = 0,
-  a = 1,
-  b = 1;
-while (b < 4000000) {
-  if (b % 2 == 0) {
-    total += b;
+import { fibonacci } from "./fibonacci.ts";
+
+let total = 0n;
+for (let term of fibonacci()) {
+  if (term > 4000000n) {
+    break;
+  } else if (term % 2n == 0n) {
+    total += term;
   }
-  b = a + b;
-  a = b - a;
 }
 console.log(total);
