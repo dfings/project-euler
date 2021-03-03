@@ -4,6 +4,8 @@ Iterable<int> range(int a, int b) sync* {
   }
 }
 
-int sum(Iterable<int> iter) {
-  return iter.reduce((value, element) => value + element);
+extension NumIterables<T extends num> on Iterable<T> {
+  T sum() {
+    return this.reduce((value, element) => value + element);
+  }
 }
