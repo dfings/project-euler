@@ -24,7 +24,6 @@
 
 (def SIZE (count GRID))
 (def WINDOW 4)
-(def MAX (- SIZE WINDOW))
 
 (defn in-range [n] (and (>= n 0) (< n SIZE)))
 

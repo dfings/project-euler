@@ -26,7 +26,6 @@ val GRID = arrayOf(
 
 val SIZE = 20
 val WINDOW = 4
-val MAX = SIZE - WINDOW
 
 data class Position(val x: Int, val y: Int) {
   fun best(): Int = sequenceOf(horizontal(), diagonalDown(), diagonalUp(), vertical())
