@@ -28,7 +28,6 @@ GRID = (
 
 SIZE = len(GRID)
 WINDOW = 4
-MAX = SIZE - WINDOW
 
 
 def in_range(n):
