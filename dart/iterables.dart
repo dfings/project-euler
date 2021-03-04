@@ -13,5 +13,5 @@ Iterable<int> range(int a, int b) sync* {
 
 extension NumIterables<T extends num> on Iterable<T> {
   T max() => reduce(math.max);
-  T sum() => reduce((value, element) => value + element);
+  T sum() => isEmpty ? 0 : reduce((value, element) => value + element);
 }
