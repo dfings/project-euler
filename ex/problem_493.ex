@@ -34,7 +34,7 @@ defmodule Problem493 do
         # Otherwise we need to sum up the values of all leaves rooted at this subtree.
         (0..@num_colors-1) 
         |> Enum.flat_map(fn color -> 
-          (1..color) 
+          (1..Enum.at(urn, color))
           |> Enum.map(fn _ -> compute_counts(pick(urn, color)) end) 
           end)
         |> Enum.reduce(&sum_tuples/2)
