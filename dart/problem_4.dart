@@ -4,7 +4,8 @@ import 'iterables.dart';
 import 'strings.dart';
 
 Iterable<int> productsOfThreeDigitNumbers() {
-  return mapProduct(range(100, 1000), range(100, 1000), (i, j) => i * j);
+  return mapProduct(
+      range(100, 1000), range(100, 1000), (int i, int j) => i * j);
 }
 
 bool isPalindrome(int n) {
