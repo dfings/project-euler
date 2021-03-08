@@ -43,18 +43,20 @@ defmodule Problem493 do
   def compute_counts(urn) do
     key = Enum.sort(urn)      
     res = Process.get(key)
-    if res == nil do
-      if all_balls_picked(urn) do
+    if res != nil do
+      res
+    else
+      res = if all_balls_picked(urn) do
         # If this is a leaf, then we can just count the colors directly.
-        res = {count_colors_picked(urn), 1} 
+        {count_colors_picked(urn), 1} 
       else
         # Otherwise we need to sum up the values of all leaves rooted at this subtree.
         child_counts = Enum.map(generate_children(urn), &compute_counts/1)
-        res = List.foldl(child_counts, {0, 0}, &sum_tuples/2)
+        List.foldl(child_counts, {0, 0}, &sum_tuples/2)
       end
       Process.put(key, res)
+      res
     end
-    res    
   end
 
   def main do
