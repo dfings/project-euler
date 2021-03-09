@@ -68,4 +68,4 @@ main = do
   let (totalColorsPicked, totalLeaves) = computeCounts startingUrn
   putStrLn $ "Total colors = " ++ show totalColorsPicked
   putStrLn $ "Total leaves = " ++ show totalLeaves
-  putStrLn $ "Average = " ++ show ((fromIntegral totalColorsPicked) / (fromIntegral totalLeaves))
+  putStrLn $ "Average = " ++ show (fromIntegral totalColorsPicked / fromIntegral totalLeaves)
