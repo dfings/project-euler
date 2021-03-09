@@ -21,7 +21,7 @@ class Urn {
   bool allPicked() => slots.sum() == SUM_ALL_PICKED;
 
   int cacheKey() {
-    // Lists
+    // Lists don't support non-reference equality checking.
     var newSlots = [...slots];
     newSlots.sort();
     int out = 0;
