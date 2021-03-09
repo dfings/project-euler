@@ -23,13 +23,11 @@ let pick color urn =
 
 (* Tuple support. *)
 let sumTuple (a1, a2) (b1, b2) = a1 + b1, a2 + b2
-let bigIntTuple (a1:int, a2:int) = (bigint a1, bigint a2)
-let sumBigIntTuples = Seq.reduce sumTuple
 
 (* Computes (totalColorsPicked, totalLeaves) for leaves rooted at this subtree. *)
 let rec computeCounts = Memoize.memoizeWithCacheKey List.sort (fun urn ->
   (* If this is a leaf, then we can just count the colors directly. *)
-  if allBallsPicked urn then bigIntTuple ((countColorsPicked urn), 1)
+  if allBallsPicked urn then (bigint (countColorsPicked urn), 1I)
   (* Otherwise we need to sum up the values of all leaves rooted at this subtree. *)  
   else 
     [0..numColors-1] 
@@ -37,7 +35,7 @@ let rec computeCounts = Memoize.memoizeWithCacheKey List.sort (fun urn ->
       [1..(List.item color urn)] 
       |> Seq.map(fun _ -> computeCounts (pick color urn)))
     |> Seq.concat
-    |> sumBigIntTuples
+    |> Seq.reduce sumTuple
 )
 
 let startingUrn = List.replicate numColors numPerColor 
