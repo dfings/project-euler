@@ -46,11 +46,10 @@ class UrnStats {
     this.totalColorsPicked = totalColorsPicked;
     this.totalPicks = totalPicks;
   }
-
-  UrnStats plus(UrnStats other) => UrnStats(
-      totalColorsPicked + other.totalColorsPicked,
-      totalPicks + other.totalPicks);
 }
+
+UrnStats sumUrnStats(UrnStats a, UrnStats b) => new UrnStats(
+    a.totalColorsPicked + b.totalColorsPicked, a.totalPicks + b.totalPicks);
 
 /** 
  * The stats at a given node are the same for any other node with the same color histogram shape,
@@ -66,7 +65,7 @@ UrnStats urnStats(Urn urn) => urnCache.putIfAbsent(urn.cacheKey(), () {
         return range(0, NUM_COLORS)
             .expand((color) => range(0, urn.slots[color])
                 .map((_) => urnStats(urn.pick(color))))
-            .reduce((value, element) => value.plus(element));
+            .reduce(sumUrnStats);
       }
     });
 
