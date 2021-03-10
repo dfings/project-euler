@@ -38,7 +38,7 @@ class Urn {
   }
 }
 
-type UrnStats = [number, number];
+type UrnStats = [bigint, bigint];
 
 /**
  * The stats at a given node are the same for any other node with the same color histogram shape,
@@ -51,9 +51,9 @@ function urnStats(urn: Urn): UrnStats {
   let result = urnCache.get(cacheKey);
   if (result == undefined) {
     if (urn.allPicked()) {
-      result = [urn.colorsPicked(), 1];
+      result = [BigInt(urn.colorsPicked()), 1n];
     } else {
-      result = [0, 0];
+      result = [0n, 0n];
       for (let i = 0; i < NUM_COLORS; i++) {
         for (let j = 0; j < urn.slots[i]; j++) {
           let child_result = urnStats(urn.pick(i));
@@ -72,4 +72,4 @@ let stats = urnStats(urn);
 console.log("Total colors = " + stats[0]);
 console.log("Total picks = " + stats[1]);
 console.log("Cache size = " + urnCache.size);
-console.log("Average = " + stats[0] / stats[1]);
+console.log("Average = " + (Number(stats[0] * 1000000000n / stats[1])) / 1000000000);
