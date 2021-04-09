@@ -1,0 +1,14 @@
+#!/usr/bin/env coconut -r
+
+def prime_factors(x):
+    def factor(num, i):
+        if num == 1:
+           return []
+        elif num % i == 0:
+            return [i] :: factor(num // i, i)
+        else:
+            return factor(num, i + 1)
+    return factor(x, 2)
+
+[head] :: tail = prime_factors(600851475143) |> list |> reversed
+print(head)

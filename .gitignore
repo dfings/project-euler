@@ -5,3 +5,4 @@
 .gradle/
 .venv/
 build/
+.python-version

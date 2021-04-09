@@ -1,0 +1,8 @@
+#!/usr/bin/env coconut -r
+
+from fibonacci import fibonacci
+
+def is_even(x) = x % 2 == 0
+def in_bound(x) = x < 4000000
+
+fibonacci() |> takewhile$(in_bound) |> filter$(is_even) |> sum |> print

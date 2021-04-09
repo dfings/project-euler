@@ -1,0 +1,4 @@
+#!/usr/bin/env coconut -r
+
+def sieve(x) = not (x % 3 and x % 5)
+range(1000) |> filter$(sieve) |> sum |> print
