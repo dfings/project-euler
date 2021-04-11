@@ -6,3 +6,8 @@
 .venv/
 build/
 .python-version
+
+debug/
+target/
+Cargo.lock
+**/*.rs.bk
