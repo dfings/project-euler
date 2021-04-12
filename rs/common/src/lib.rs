@@ -1,13 +1,18 @@
-extern crate itertools;
-
-use itertools::unfold;
-
 pub fn fibonacci() -> impl Iterator<Item = u64> {
-    unfold((0, 1), |(a, b)| {
-        *b = *a + *b;
-        *a = *b - *a;
-        Some(*a)
-    })
+    struct State {
+        a: u64,
+        b: u64,
+    }
+    impl Iterator for State {
+        type Item = u64;
+        fn next(&mut self) -> Option<u64> {
+            let out = self.a;
+            self.a = self.b;
+            self.b += out;
+            Some(out)
+        }
+    }
+    State { a: 0, b: 1 }
 }
 
 pub fn prime_factors(mut n: u64) -> Vec<u64> {
