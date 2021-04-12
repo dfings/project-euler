@@ -1,18 +1,17 @@
-extern crate itertools;
-
-use itertools::iproduct;
-
 fn products_of_three_digit_numbers() -> impl Iterator<Item = u32> {
-    iproduct!(100..1000, 100..1000).map(|(a, b)| a * b)
+    (100..1000).flat_map(|i| (i..1000).map(move |j| i * j))
 }
 
 fn is_palindrome(value: &u32) -> bool {
-    let value_str = value.to_string();
-    value_str == value_str.chars().rev().collect::<String>()
+    let value = value.to_string();
+    let rev: String = value.chars().rev().collect();
+    value == rev
 }
 
 fn main() {
-    if let Some(max) = products_of_three_digit_numbers().filter(is_palindrome).max() {
-        println!("{}", max);
-    }
+    let max = products_of_three_digit_numbers()
+        .filter(is_palindrome)
+        .max()
+        .unwrap();
+    println!("{}", max);
 }
