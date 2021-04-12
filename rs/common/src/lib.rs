@@ -1,3 +1,5 @@
+use std::collections::HashMap;
+
 pub fn fibonacci() -> impl Iterator<Item = u64> {
     struct State {
         a: u64,
@@ -13,6 +15,39 @@ pub fn fibonacci() -> impl Iterator<Item = u64> {
         }
     }
     State { a: 0, b: 1 }
+}
+
+pub fn primes() -> impl Iterator<Item = u64> {
+    struct State {
+        current: u64,
+        sieve: HashMap<u64, Vec<u64>>,
+    }
+    impl Iterator for State {
+        type Item = u64;
+        fn next(&mut self) -> Option<u64> {
+            loop {
+                self.current += 1;
+                let existing_factors = self.sieve.get(&self.current);
+                if existing_factors.is_none() {
+                    self.sieve
+                        .insert(self.current * self.current, vec![self.current]);
+                    return Some(self.current);
+                }
+                let existing_factors = existing_factors.unwrap().clone();
+                self.sieve.remove(&self.current);
+                for factor in existing_factors {
+                    self.sieve
+                        .entry(self.current + factor)
+                        .or_insert_with(Vec::new)
+                        .push(factor);
+                }
+            }
+        }
+    }
+    State {
+        current: 1,
+        sieve: HashMap::new(),
+    }
 }
 
 pub fn prime_factors(mut n: u64) -> Vec<u64> {
