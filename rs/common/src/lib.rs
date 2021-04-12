@@ -27,17 +27,21 @@ pub fn primes() -> impl Iterator<Item = u64> {
         fn next(&mut self) -> Option<u64> {
             loop {
                 self.current += 1;
-                let existing_factors = self.sieve.remove(&self.current);
-                if existing_factors.is_none() {
-                    self.sieve
-                        .insert(self.current * self.current, vec![self.current]);
-                    return Some(self.current);
-                }
-                for factor in existing_factors.unwrap() {
-                    self.sieve
-                        .entry(self.current + factor)
-                        .or_insert_with(Vec::new)
-                        .push(factor);
+                let res = self.sieve.remove(&self.current);
+                match res {
+                    None => {
+                        self.sieve
+                            .insert(self.current * self.current, vec![self.current]);
+                        return Some(self.current);
+                    }
+                    Some(existing_factors) => {
+                        for factor in existing_factors {
+                            self.sieve
+                                .entry(self.current + factor)
+                                .or_insert_with(Vec::new)
+                                .push(factor);
+                        }
+                    }
                 }
             }
         }
