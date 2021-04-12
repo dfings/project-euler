@@ -3,5 +3,5 @@
 import 'primes.dart';
 
 void main() {
-  print(primes().skip(9999).first);
+  print(primes().skip(10000).first);
 }
