@@ -1,7 +1,6 @@
 #!/usr/bin/env dart
 
 import 'dart:collection';
-import 'dart:math';
 import 'iterables.dart';
 import 'package:collection/collection.dart';
 
