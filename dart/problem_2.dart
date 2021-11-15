@@ -1,10 +1,10 @@
 #!/usr/bin/env dart
 
 import 'fibonacci.dart';
-import 'iterables.dart';
+import 'package:collection/collection.dart';
 
 bool even(int n) => n % 2 == 0;
 
 void main() {
-  print(fibonacci().takeWhile((i) => i < 4000000).where(even).sum());
+  print(fibonacci().takeWhile((i) => i < 4000000).where(even).sum);
 }

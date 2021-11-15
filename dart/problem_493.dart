@@ -3,6 +3,7 @@
 import 'dart:collection';
 import 'dart:math';
 import 'iterables.dart';
+import 'package:collection/collection.dart';
 
 const NUM_COLORS = 7;
 const NUM_PER_COLOR = 10;
@@ -18,17 +19,10 @@ class Urn {
 
   int colorsPicked() => slots.where((i) => i < NUM_PER_COLOR).length;
 
-  bool allPicked() => slots.sum() == SUM_ALL_PICKED;
+  bool allPicked() => slots.sum == SUM_ALL_PICKED;
 
-  int cacheKey() {
-    // Lists don't support non-reference equality checking.
-    var newSlots = [...slots];
-    newSlots.sort();
-    int out = 0;
-    for (int i = 0; i < newSlots.length; i++) {
-      out += (pow(11, i) * newSlots[i]).toInt();
-    }
-    return out;
+  List<int> cacheKey() {
+    return slots.toList()..sort();
   }
 
   Urn pick(int color) {
@@ -56,7 +50,9 @@ UrnStats sumUrnStats(UrnStats a, UrnStats b) => new UrnStats(
  * ignoring the specific colors. For example, [1 2 3 4 5 6 7] and [7, 6, 5, 4, 3, 2, 1] will have
  * the same stats due to symmetry. Thus we can memoize computing the stats by sorting the slots.
  */
-var urnCache = HashMap<int, UrnStats>();
+const eq = ListEquality();
+var urnCache = HashMap<List<int>, UrnStats>(
+    equals: eq.equals, hashCode: eq.hash, isValidKey: eq.isValidKey);
 UrnStats urnStats(Urn urn) => urnCache.putIfAbsent(urn.cacheKey(), () {
       if (urn.allPicked()) {
         return new UrnStats(BigInt.from(urn.colorsPicked()), BigInt.from(1));

@@ -1,5 +1,6 @@
 #!/usr/bin/env dart
 
+import 'dart:math';
 import 'iterables.dart';
 import 'strings.dart';
 
@@ -14,5 +15,5 @@ bool isPalindrome(int n) {
 }
 
 void main() {
-  print(productsOfThreeDigitNumbers().where(isPalindrome).max());
+  print(productsOfThreeDigitNumbers().where(isPalindrome).reduce(max));
 }

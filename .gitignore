@@ -11,3 +11,6 @@ debug/
 target/
 Cargo.lock
 **/*.rs.bk
+pubspec.lock
+.dart_tool/
+.packages
