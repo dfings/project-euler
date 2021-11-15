@@ -54,14 +54,14 @@ UrnStats computeUrnStats(Urn urn) {
 }
 
 const eq = ListEquality();
-var urnCache = HashMap<List<int>, UrnStats>(
+final urnCache = HashMap<List<int>, UrnStats>(
     equals: eq.equals, hashCode: eq.hash, isValidKey: eq.isValidKey);
 UrnStats urnStats(Urn urn) =>
     urnCache.putIfAbsent(urn.cacheKey, () => computeUrnStats(urn));
 
 void main() {
-  var urn = Urn(List<int>.filled(NUM_COLORS, NUM_PER_COLOR));
-  var stats = urnStats(urn);
+  final urn = Urn(List<int>.filled(NUM_COLORS, NUM_PER_COLOR));
+  final stats = urnStats(urn);
   print("Total colors = ${stats.totalColorsPicked}");
   print("Total picks = ${stats.totalPicks}");
   print("Cache size = ${urnCache.length}");
