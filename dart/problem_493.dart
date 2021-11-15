@@ -19,7 +19,7 @@ class Urn {
   int get colorsPicked => slots.where((i) => i < NUM_PER_COLOR).length;
   bool get allPicked => slots.sum == SUM_ALL_PICKED;
   List<int> get cacheKey => slots.toList()..sort();
-  Urn pick(int color) => new Urn(slots.toList()..[color] = slots[color] - 1);
+  Urn pick(int color) => Urn(slots.toList()..[color] = slots[color] - 1);
 }
 
 class UrnStats {
@@ -31,7 +31,7 @@ class UrnStats {
     this.totalPicks = totalPicks;
   }
 
-  UrnStats operator +(UrnStats other) => new UrnStats(
+  UrnStats operator +(UrnStats other) => UrnStats(
       totalColorsPicked + other.totalColorsPicked,
       totalPicks + other.totalPicks);
 }
@@ -43,7 +43,7 @@ class UrnStats {
  */
 UrnStats computeUrnStats(Urn urn) {
   if (urn.allPicked) {
-    return new UrnStats(BigInt.from(urn.colorsPicked), BigInt.from(1));
+    return UrnStats(BigInt.from(urn.colorsPicked), BigInt.from(1));
   } else {
     // Branch by each possible pick.
     return range(0, NUM_COLORS)
