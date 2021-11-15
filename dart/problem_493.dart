@@ -16,19 +16,10 @@ class Urn {
     this.slots = slots;
   }
 
-  int colorsPicked() => slots.where((i) => i < NUM_PER_COLOR).length;
-
-  bool allPicked() => slots.sum == SUM_ALL_PICKED;
-
-  List<int> cacheKey() {
-    return slots.toList()..sort();
-  }
-
-  Urn pick(int color) {
-    var newSlots = [...slots];
-    newSlots[color]--;
-    return new Urn(newSlots);
-  }
+  int get colorsPicked => slots.where((i) => i < NUM_PER_COLOR).length;
+  bool get allPicked => slots.sum == SUM_ALL_PICKED;
+  List<int> get cacheKey => slots.toList()..sort();
+  Urn pick(int color) => new Urn(slots.toList()..[color] = slots[color] - 1);
 }
 
 class UrnStats {
@@ -39,30 +30,34 @@ class UrnStats {
     this.totalColorsPicked = totalColorsPicked;
     this.totalPicks = totalPicks;
   }
-}
 
-UrnStats sumUrnStats(UrnStats a, UrnStats b) => new UrnStats(
-    a.totalColorsPicked + b.totalColorsPicked, a.totalPicks + b.totalPicks);
+  UrnStats operator +(UrnStats other) => new UrnStats(
+      totalColorsPicked + other.totalColorsPicked,
+      totalPicks + other.totalPicks);
+}
 
 /** 
  * The stats at a given node are the same for any other node with the same color histogram shape,
  * ignoring the specific colors. For example, [1 2 3 4 5 6 7] and [7, 6, 5, 4, 3, 2, 1] will have
  * the same stats due to symmetry. Thus we can memoize computing the stats by sorting the slots.
  */
+UrnStats computeUrnStats(Urn urn) {
+  if (urn.allPicked) {
+    return new UrnStats(BigInt.from(urn.colorsPicked), BigInt.from(1));
+  } else {
+    // Branch by each possible pick.
+    return range(0, NUM_COLORS)
+        .expand((color) =>
+            range(0, urn.slots[color]).map((_) => urnStats(urn.pick(color))))
+        .reduce((a, b) => a + b);
+  }
+}
+
 const eq = ListEquality();
 var urnCache = HashMap<List<int>, UrnStats>(
     equals: eq.equals, hashCode: eq.hash, isValidKey: eq.isValidKey);
-UrnStats urnStats(Urn urn) => urnCache.putIfAbsent(urn.cacheKey(), () {
-      if (urn.allPicked()) {
-        return new UrnStats(BigInt.from(urn.colorsPicked()), BigInt.from(1));
-      } else {
-        // Branch by each possible pick.
-        return range(0, NUM_COLORS)
-            .expand((color) => range(0, urn.slots[color])
-                .map((_) => urnStats(urn.pick(color))))
-            .reduce(sumUrnStats);
-      }
-    });
+UrnStats urnStats(Urn urn) =>
+    urnCache.putIfAbsent(urn.cacheKey, () => computeUrnStats(urn));
 
 void main() {
   var urn = Urn(List<int>.filled(NUM_COLORS, NUM_PER_COLOR));
