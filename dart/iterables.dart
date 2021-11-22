@@ -8,3 +8,7 @@ Iterable<int> range(int a, int b) sync* {
     yield i;
   }
 }
+
+extension IntIterables on Iterable<int> {
+  int product() => isEmpty ? 0 : reduce((value, element) => value * element);
+}
