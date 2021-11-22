@@ -3,10 +3,15 @@
 import 'iterables.dart';
 
 List<int> find_right_triangle() {
-  return range(1, 333)
-      .expand((a) => range(a, 500).map((b) => [a, b, 1000 - a - b]))
-      .where((t) => t[0] * t[0] + t[1] * t[1] == t[2] * t[2])
-      .first;
+  for (int a = 1; a <= 333; a++) {
+    for (int b = a; b <= 500; b++) {
+      int c = 1000 - a - b;
+      if (a * a + b * b == c * c) {
+        return [a, b, c];
+      }
+    }
+  }
+  throw Exception("Didn't find value.");
 }
 
 void main() {
