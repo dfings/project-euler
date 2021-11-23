@@ -1,6 +1,5 @@
 #!/usr/bin/env dart
 
-import 'iterables.dart';
 import 'primes.dart';
 import 'package:collection/collection.dart';
 
