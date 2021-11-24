@@ -13,10 +13,7 @@ struct Urn {
 
 impl Urn {
     fn colors_picked(&self) -> usize {
-        self.slots
-            .into_iter()
-            .filter(|it| *it < NUM_PER_COLOR)
-            .count()
+        self.slots.iter().filter(|it| **it < NUM_PER_COLOR).count()
     }
 
     fn all_picked(&self) -> bool {
@@ -39,7 +36,7 @@ struct UrnStats {
 fn urn_stats(urn: &mut Urn, cache: &mut HashMap<Slots, UrnStats>) -> UrnStats {
     let key = urn.cache_key();
     match cache.get(&key) {
-        Some(stats) => stats.clone(),
+        Some(stats) => *stats,
         None => {
             let mut stats = UrnStats {
                 total_colors_picked: 0.0,
