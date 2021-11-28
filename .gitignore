@@ -16,3 +16,4 @@ pubspec.lock
 .packages
 problem_493.dSYM/
 problem_493
+*.beam
