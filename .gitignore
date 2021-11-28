@@ -14,3 +14,5 @@ Cargo.lock
 pubspec.lock
 .dart_tool/
 .packages
+problem_493.dSYM/
+problem_493
