@@ -1,4 +1,4 @@
-#!/usr/bin/env deno run
+#!/usr/bin/env ts-node
 
 function reverse(s: string): string {
   return s.split("").reverse().join("");
@@ -15,7 +15,7 @@ for (let i = 100; i < 1000; i++) {
     if (isPalindrome(k.toString())) {
       value = Math.max(value, k);
     }
-  }
+  } 
 }
 
 console.log(value);

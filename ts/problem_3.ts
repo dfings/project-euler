@@ -1,4 +1,4 @@
-#!/usr/bin/env deno run
+#!/usr/bin/env ts-node
 
 import { prime_factors } from "./factor.ts";
 

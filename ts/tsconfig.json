@@ -1,7 +1,9 @@
 {
   "compilerOptions": {
+    "allowImportingTsExtensions": true,
+    "noEmit": true,
     "noImplicitAny": true,
-    "target": "es6",
-    "lib": ["dom", "es6"]
+    "target": "esnext",
+    "lib": ["dom", "esnext"]
   }
 }

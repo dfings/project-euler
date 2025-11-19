@@ -1,4 +1,4 @@
-#!/usr/bin/env deno run
+#!/usr/bin/env ts-node
 
 import { fibonacci } from "./fibonacci.ts";
 
@@ -10,4 +10,4 @@ for (let term of fibonacci()) {
     total += term;
   }
 }
-console.log(total);
+console.log(total.toString());

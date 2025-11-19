@@ -1,4 +1,4 @@
-#!/usr/bin/env deno run
+#!/usr/bin/env ts-node
 
 function gcd(x: number, y: number): number {
   while (y != 0) {

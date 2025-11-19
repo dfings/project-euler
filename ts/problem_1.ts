@@ -1,4 +1,4 @@
-#!/usr/bin/env deno run
+#!/usr/bin/env ts-node
 
 let sum = 0;
 for (let i = 0; i < 1000; i++) {

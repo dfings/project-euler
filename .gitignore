@@ -6,6 +6,7 @@
 .venv/
 build/
 .python-version
+.idea/
 
 debug/
 target/
@@ -17,3 +18,4 @@ pubspec.lock
 problem_493.dSYM/
 problem_493
 *.beam
+package-lock.json

@@ -1,4 +1,4 @@
-#!/usr/bin/env deno run
+#!/usr/bin/env ts-node
 
 const NUM_COLORS = 7;
 const NUM_PER_COLOR = 10;
