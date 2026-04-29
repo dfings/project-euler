@@ -1,10 +1,9 @@
-import gleam/int
-import gleam/io
-import gleam/yielder.{filter, fold, range}
+import gleam/yielder.{filter, range}
+import lib.{println, sum}
 
 pub fn main() {
-  let total = range(from: 1, to: 1000) |> filter(sieve) |> fold(0, int.add)
-  io.println(int.to_string(total))
+  let total = range(from: 1, to: 1000) |> filter(sieve) |> sum()
+  println(total)
 }
 
 fn sieve(i: Int) -> Bool {
