@@ -1,10 +1,18 @@
 import gleam/int
 import gleam/io
 import gleam/pair.{first, second}
-import gleam/yielder.{type Yielder, fold, iterate, map}
+import gleam/yielder.{type Yielder, flat_map, fold, iterate, map}
+
+pub fn cartesian_product(a: Yielder(t), b: Yielder(u)) -> Yielder(#(t, u)) {
+  a |> flat_map(fn(x) { b |> map(fn(y) { #(x, y) }) })
+}
 
 pub fn fibonacci() -> Yielder(Int) {
   iterate(#(1, 1), fn(p) { #(second(p), first(p) + second(p)) }) |> map(first)
+}
+
+pub fn max(in yielder: Yielder(Int)) -> Int {
+  fold(yielder, 0, fn(acc, e) { int.max(acc, e) })
 }
 
 pub fn prime_factors(value: Int) -> List(Int) {
